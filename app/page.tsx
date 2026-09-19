@@ -57,7 +57,11 @@ export default function Home() {
         <div className="hero-scene" aria-label="Interactive 3D podcast studio scene"><StudioScene motionEnabled={motionEnabled} /></div>
         <div className="hero-overlay">
           <div className="hero-eyebrow">AN UNOFFICIAL FAN EXPERIENCE</div>
-          <div className="hero-title"><span className="script-line">ZANE + HEATH</span><h1>UNFILTERED</h1><div className="outline-word">PODCAST</div></div>
+          <div className="hero-title">
+            <div className="hero-host-line"><span>ZANE</span><i>+</i><span>HEATH</span></div>
+            <h1>UNFILTERED</h1>
+            <div className="hero-podcast-tag"><span>THE</span><b>PODCAST</b><i /></div>
+          </div>
           <p className="hero-copy">A 3-D FAN-BUILT TRIBUTE TO THE CHAOS,<br />THE COFFEE, AND THE STORIES THAT GO OFF THE RAILS.</p>
           <div className="hero-actions"><a className="primary-btn" href="#latest">LATEST EPISODE</a><a className="text-btn" href="#archive">ENTER THE ARCHIVE ↘</a></div>
         </div>
