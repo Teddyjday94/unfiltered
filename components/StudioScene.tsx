@@ -9,13 +9,28 @@ type SceneProps = { motionEnabled: boolean };
 
 function CameraRig({ motionEnabled }: SceneProps) {
   const { camera, pointer } = useThree();
+  const smoothScroll = useRef(0);
+
   useFrame(() => {
-    const tx = motionEnabled ? pointer.x * 0.38 : 0;
+    const rawScroll = typeof window === "undefined"
+      ? 0
+      : Math.min(Math.max(window.scrollY / Math.max(window.innerHeight, 1), 0), 1);
+    smoothScroll.current = THREE.MathUtils.lerp(
+      smoothScroll.current,
+      motionEnabled ? rawScroll : 0,
+      0.045
+    );
+
+    const scroll = smoothScroll.current;
+    const tx = motionEnabled ? pointer.x * 0.42 : 0;
     const ty = motionEnabled ? pointer.y * 0.2 : 0;
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, tx, 0.035);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0.15 + ty, 0.035);
-    camera.lookAt(0, 0.1, 0);
+
+    camera.position.x = THREE.MathUtils.lerp(camera.position.x, tx + scroll * 0.1, 0.04);
+    camera.position.y = THREE.MathUtils.lerp(camera.position.y, 0.15 + ty - scroll * 0.22, 0.04);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, 5.2 - scroll * 0.72, 0.04);
+    camera.lookAt(pointer.x * 0.08, 0.1 - scroll * 0.08, -scroll * 0.22);
   });
+
   return null;
 }
 
