@@ -28,7 +28,20 @@ export default function Home() {
     if (reduced) setMotionEnabled(false);
 
     const root = document.documentElement;
+    const toneTargets = Array.from(document.querySelectorAll<HTMLElement>(
+      ".latest, .crew, .archive, .moments, .soundboard, .listen"
+    ));
+    const toneMap: Record<string, string> = {
+      latest: "rgba(242,200,75,.22)",
+      crew: "rgba(86,169,200,.20)",
+      archive: "rgba(237,112,88,.18)",
+      moments: "rgba(201,157,111,.18)",
+      soundboard: "rgba(62,143,135,.20)",
+      listen: "rgba(240,197,90,.18)",
+    };
     let frame = 0;
+
+    toneTargets.forEach((section) => section.classList.add("cinematic-section"));
 
     const updateMotionVars = () => {
       frame = 0;
@@ -42,6 +55,32 @@ export default function Home() {
       root.style.setProperty("--hero-shift", `${Math.min(y * 0.12, 110)}px`);
       root.style.setProperty("--hero-copy-shift", `${Math.min(y * 0.055, 52)}px`);
       document.body.classList.toggle("is-scrolled", y > 28);
+
+      let activeSection: HTMLElement | null = null;
+      let closest = Number.POSITIVE_INFINITY;
+      toneTargets.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionProgress = Math.min(
+          Math.max((vh * 0.78 - rect.top) / Math.max(rect.height + vh * 0.25, 1), 0),
+          1
+        );
+        section.style.setProperty("--section-progress", sectionProgress.toFixed(4));
+
+        const center = Math.abs((rect.top + rect.bottom) / 2 - vh / 2);
+        if (rect.bottom > vh * 0.18 && rect.top < vh * 0.82 && center < closest) {
+          closest = center;
+          activeSection = section;
+        }
+      });
+
+      toneTargets.forEach((section) => section.classList.toggle("is-cinematic-active", section === activeSection));
+      if (activeSection) {
+        const toneKey = ["latest", "crew", "archive", "moments", "soundboard", "listen"]
+          .find((key) => activeSection?.classList.contains(key));
+        if (toneKey) root.style.setProperty("--section-tone", toneMap[toneKey]);
+      } else {
+        root.style.setProperty("--section-tone", "rgba(245,237,225,.08)");
+      }
     };
 
     const onScroll = () => {
@@ -105,6 +144,7 @@ export default function Home() {
     <main className={`site${easterEgg ? " egg-active" : ""}${motionEnabled ? "" : " motion-off"}`}>
       <div className="noise" aria-hidden="true" />
       <div className="cinema-lights" aria-hidden="true" />
+      <div className="cinema-crossfade" aria-hidden="true" />
       {easterEgg && <div className="easter-toast" role="status">UNFILTERED MODE // SECRET TAPE FOUND</div>}
 
       <header className="topbar">
@@ -159,7 +199,7 @@ export default function Home() {
         </div>
       </section>
 
-      <EpisodeArchive />
+      <EpisodeArchive motionEnabled={motionEnabled} />
 
       <section className="moments section-shell">
         <div className="section-kicker">UNFILTERED MOMENTS</div>
