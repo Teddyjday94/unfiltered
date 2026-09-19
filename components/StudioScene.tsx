@@ -108,6 +108,37 @@ function Desk() {
   );
 }
 
+
+function RetroSet() {
+  const stripeXs = [-0.34, -0.17, 0, 0.17, 0.34];
+  const Chair = ({ x, ry }: { x: number; ry: number }) => (
+    <group position={[x, -0.65, -0.75]} rotation={[0, ry, 0]}>
+      <RoundedBox args={[1.48, 1.38, 1.22]} radius={0.26} smoothness={4} position={[0, 0.18, 0]}>
+        <meshStandardMaterial color="#704329" roughness={0.9} />
+      </RoundedBox>
+      <RoundedBox args={[1.34, 0.72, 1.34]} radius={0.23} smoothness={4} position={[0, -0.48, 0.1]}>
+        <meshStandardMaterial color="#613924" roughness={0.92} />
+      </RoundedBox>
+      {stripeXs.map((sx, i) => <mesh key={i} position={[sx, 0.18, 0.62]}><boxGeometry args={[0.055, 0.98, 0.025]} /><meshBasicMaterial color="#aa7448" transparent opacity={0.58} /></mesh>)}
+    </group>
+  );
+  return (
+    <group>
+      <group position={[-2.45, -0.52, -1.55]}>
+        <RoundedBox args={[1.2, 1.5, 0.38]} radius={0.08} smoothness={4}><meshStandardMaterial color="#17120f" roughness={0.7} metalness={0.18} /></RoundedBox>
+        <mesh position={[0, -0.12, 0.21]}><planeGeometry args={[0.86, 0.68]} /><meshBasicMaterial color="#ef6f31" transparent opacity={0.28} /></mesh>
+      </group>
+      <Chair x={-1.15} ry={0.16} />
+      <Chair x={1.15} ry={-0.16} />
+      <group position={[0, -1.0, -0.24]}>
+        <mesh><cylinderGeometry args={[0.4, 0.4, 0.08, 28]} /><meshStandardMaterial color="#684026" roughness={0.6} /></mesh>
+        <mesh position={[0, -0.45, 0]}><cylinderGeometry args={[0.055, 0.085, 0.84, 14]} /><meshStandardMaterial color="#2b2019" metalness={0.6} roughness={0.3} /></mesh>
+        <mesh position={[0.08, 0.25, 0]}><cylinderGeometry args={[0.09, 0.09, 0.38, 16]} /><meshStandardMaterial color="#d6d8d0" metalness={0.25} roughness={0.32} /></mesh>
+      </group>
+    </group>
+  );
+}
+
 function Dust({ motionEnabled }: SceneProps) {
   const points = useRef<THREE.Points>(null);
   const positions = useMemo(() => {
@@ -168,7 +199,7 @@ export default function StudioScene({ motionEnabled }: SceneProps) {
       <pointLight position={[0, 1.2, -1.1]} color="#ff7b39" intensity={10} distance={4} />
       <WoodWall />
       <Sign />
-      <Desk />
+      <RetroSet />
       <Float speed={motionEnabled ? 1.2 : 0} rotationIntensity={0.05} floatIntensity={motionEnabled ? 0.1 : 0}>
         <Microphone x={-0.88} motionEnabled={motionEnabled} />
         <Microphone x={0.88} mirror motionEnabled={motionEnabled} />
