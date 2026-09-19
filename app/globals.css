@@ -517,3 +517,92 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .studio-look-hint{right:14px;bottom:18px}
   .studio-page-stage:after{background:linear-gradient(0deg,rgba(239,229,216,.82) 4%,rgba(239,229,216,.35) 38%,transparent 68%)}
 }
+
+
+/* v10 photographed 2.5D studio diorama */
+.photo-diorama{
+  --frame-rx:0deg;--frame-ry:0deg;
+  --mid-x:0px;--mid-y:0px;--near-x:0px;--near-y:0px;--far-x:0px;--far-y:0px;
+  position:absolute;inset:0;overflow:hidden;background:#171310;
+  perspective:1500px;touch-action:none;user-select:none;
+}
+.photo-diorama-frame{
+  position:absolute;left:50%;top:50%;
+  width:112%;aspect-ratio:1024/575;
+  transform-style:preserve-3d;
+  transform:translate(-50%,-50%) rotateX(var(--frame-rx)) rotateY(var(--frame-ry)) scale(1.015);
+  transition:transform .16s ease-out;
+  will-change:transform;
+}
+.photo-diorama.is-interactive .photo-diorama-frame{transition:transform .08s linear}
+.diorama-photo{
+  position:absolute;inset:0;
+  background-image:var(--studio-photo);
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+  background-position:center;
+  transform-origin:center;
+}
+.diorama-backplate{
+  transform:translate3d(var(--far-x),var(--far-y),0);
+  filter:saturate(1.04) contrast(1.025) brightness(.98);
+}
+.diorama-blur-patch{
+  z-index:2;
+  filter:blur(10px) saturate(.78) brightness(.82);
+  transform:scale(1.025);
+  opacity:.98;
+}
+.diorama-cutout{
+  z-index:4;
+  filter:drop-shadow(0 18px 18px rgba(25,16,12,.32));
+  will-change:transform;
+}
+.cutout-left-chair,.blur-left-chair{
+  clip-path:polygon(5.4% 36.5%,8% 34.3%,29.8% 32.9%,32.6% 34.8%,33.5% 51.1%,36.5% 53.2%,41% 60%,42.1% 70.4%,41.4% 77.2%,39.1% 81.7%,35.3% 83.8%,34.2% 90.6%,31.3% 93.2%,29.5% 84.9%,12.6% 84.2%,11% 89.4%,9% 91.7%,7.8% 84.3%,5.2% 81.9%,4.2% 75.1%,4.3% 54.3%,5.4% 52.2%);
+}
+.cutout-right-chair,.blur-right-chair{
+  clip-path:polygon(68.8% 36.7%,71.5% 34.3%,89.6% 35.5%,92.8% 37.9%,93.5% 53.7%,96.2% 56.7%,98.6% 63.5%,99.3% 72.9%,97.9% 79.1%,94.3% 83.1%,92.9% 89.6%,89.8% 92%,88.6% 83.7%,67.8% 82.6%,65.9% 89.4%,63.5% 91.5%,62.3% 84.3%,58.9% 81.6%,57.3% 75.1%,57.5% 60%,59.9% 53.7%,66.9% 50.6%);
+}
+.cutout-table,.blur-table{
+  clip-path:polygon(43.4% 60.2%,45.5% 56.7%,53.4% 56.9%,56.5% 59.7%,57.8% 63.5%,58% 73%,56.7% 79%,55.6% 87.1%,53.1% 90.1%,46.5% 89.4%,44% 86.8%,42.8% 80%,41.9% 73.7%,42% 64.5%);
+}
+.cutout-left-chair,.cutout-right-chair{transform:translate3d(var(--mid-x),var(--mid-y),45px)}
+.cutout-table{transform:translate3d(var(--near-x),var(--near-y),74px)}
+.diorama-depth-glow{
+  position:absolute;z-index:3;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 78%,rgba(255,100,35,.13),transparent 24%),linear-gradient(90deg,rgba(44,91,255,.06),transparent 25% 75%,rgba(44,91,255,.05));
+  mix-blend-mode:screen;
+}
+.diorama-vignette{
+  position:absolute;z-index:8;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 90px rgba(20,13,10,.18);
+}
+.photo-diorama.is-static .photo-diorama-frame{transform:translate(-50%,-50%) scale(1.015)!important}
+.photo-diorama.is-static .diorama-cutout,.photo-diorama.is-static .diorama-backplate{transform:none!important}
+.studio-photo-loading{background:linear-gradient(135deg,#7c5542,#2d241f)}
+.hero-reference-photo{background:none!important;overflow:hidden}
+.hero-reference-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-reference-photo span,.hero-reference-photo b{position:relative;z-index:2}
+.hero-reference-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(23,16,13,.76),transparent 72%);z-index:1}
+.page-portal-photo{position:absolute!important;inset:0!important;width:100%;height:100%;object-fit:cover;z-index:0!important;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.page-portal:hover .page-portal-photo{transform:scale(1.045)}
+.portal-studio{background:#392a22}
+.studio-reference-photo{width:100%;max-height:620px;object-fit:cover;box-shadow:25px 30px 60px rgba(72,45,31,.18)}
+.studio-page-canvas{background:#171310}
+.studio-page-stage:after{z-index:2}
+.studio-page-copy{z-index:4}
+.studio-look-hint{z-index:6}
+.hero-scene>.photo-diorama{position:absolute;inset:0}
+.hero-scene:after{z-index:2}
+@media(max-width:760px){
+  .photo-diorama-frame{width:auto;height:108%;aspect-ratio:1024/575;transform:translate(-50%,-50%) scale(1.01)}
+  .diorama-cutout,.diorama-blur-patch{display:none}
+  .photo-diorama.is-interactive{touch-action:pan-y}
+  .studio-look-hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .photo-diorama-frame,.diorama-photo{transition:none!important;transform:none!important}
+  .photo-diorama-frame{left:0;top:0;width:100%;height:100%;aspect-ratio:auto}
+  .diorama-cutout,.diorama-blur-patch{display:none}
+}
