@@ -487,3 +487,33 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .studio-page-stage:after{background:linear-gradient(0deg,rgba(239,229,216,.9) 5%,rgba(239,229,216,.5) 45%,transparent 72%)}
   footer{padding-bottom:100px}
 }
+
+
+/* v9 real-set 3D rebuild */
+.studio-look-hint{
+  position:absolute;z-index:5;right:clamp(20px,4vw,60px);bottom:30px;
+  display:flex;align-items:center;gap:10px;padding:10px 13px;
+  background:rgba(38,29,24,.82);border:1px solid rgba(255,255,255,.16);
+  color:#fff4e8;backdrop-filter:blur(12px);pointer-events:none;
+  box-shadow:0 16px 40px rgba(49,31,23,.18)
+}
+.studio-look-hint span{font-size:8px;letter-spacing:.2em;color:#f0bd62}
+.studio-look-hint b{font-size:9px;letter-spacing:.12em}
+.studio-look-hint i{font-style:normal;font-size:16px;opacity:.7}
+.studio-page-canvas{cursor:grab}
+.studio-page-canvas:active{cursor:grabbing}
+.studio-page-stage{background:#d8c7b7}
+.studio-page-stage:after{
+  background:
+    linear-gradient(90deg,rgba(244,236,225,.48) 0%,rgba(244,236,225,.16) 24%,transparent 45%),
+    linear-gradient(0deg,rgba(232,220,207,.34),transparent 24%)
+}
+.hero-scene:after{
+  background:
+    linear-gradient(90deg,rgba(247,239,227,.48) 0%,rgba(247,239,227,.24) 18%,rgba(247,239,227,.06) 34%,transparent 48%),
+    linear-gradient(0deg,rgba(239,229,216,.7) 0%,rgba(239,229,216,.18) 16%,transparent 32%) !important
+}
+@media(max-width:760px){
+  .studio-look-hint{right:14px;bottom:18px}
+  .studio-page-stage:after{background:linear-gradient(0deg,rgba(239,229,216,.82) 4%,rgba(239,229,216,.35) 38%,transparent 68%)}
+}
