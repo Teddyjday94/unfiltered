@@ -26,6 +26,66 @@ export default function Home() {
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) setMotionEnabled(false);
+
+    const root = document.documentElement;
+    let frame = 0;
+
+    const updateMotionVars = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const vh = Math.max(window.innerHeight, 1);
+      const heroProgress = Math.min(Math.max(y / vh, 0), 1);
+      root.style.setProperty("--hero-progress", heroProgress.toFixed(4));
+      root.style.setProperty("--hero-shift", `${Math.min(y * 0.12, 110)}px`);
+      root.style.setProperty("--hero-copy-shift", `${Math.min(y * 0.055, 52)}px`);
+      document.body.classList.toggle("is-scrolled", y > 28);
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateMotionVars);
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
+      const x = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
+      const y = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
+      root.style.setProperty("--pointer-x", x.toFixed(4));
+      root.style.setProperty("--pointer-y", y.toFixed(4));
+      root.style.setProperty("--tilt-y", `${(x * 5.2).toFixed(2)}deg`);
+      root.style.setProperty("--tilt-x", `${(-y * 4.2).toFixed(2)}deg`);
+    };
+
+    updateMotionVars();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+    const revealTargets = Array.from(document.querySelectorAll<HTMLElement>(
+      ".section-kicker, .latest-art, .latest-copy, .crew-photo-wrap, .crew-copy, .archive-tools, .episode-poster, .desk-board, .board-layout, .platform-grid"
+    ));
+
+    revealTargets.forEach((element, index) => {
+      element.classList.add("motion-reveal");
+      element.style.setProperty("--reveal-delay", `${Math.min((index % 5) * 55, 220)}ms`);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          (entry.target as HTMLElement).classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+
+    revealTargets.forEach((element) => observer.observe(element));
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pointermove", onPointerMove);
+      observer.disconnect();
+      document.body.classList.remove("is-scrolled");
+    };
   }, []);
 
   const tapRec = () => {
@@ -39,7 +99,7 @@ export default function Home() {
   };
 
   return (
-    <main className={easterEgg ? "site egg-active" : "site"}>
+    <main className={`site${easterEgg ? " egg-active" : ""}${motionEnabled ? "" : " motion-off"}`}>
       <div className="noise" aria-hidden="true" />
       {easterEgg && <div className="easter-toast" role="status">UNFILTERED MODE // SECRET TAPE FOUND</div>}
 
