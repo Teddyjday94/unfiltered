@@ -100,9 +100,9 @@ function TallPlant({x,mirror=false}:{x:number;mirror?:boolean}){
 
 export function RoomShell(){
   return <>
-    <mesh position={[0,-1.52,-.1]} rotation={[-Math.PI/2,0,0]} receiveShadow><planeGeometry args={[12,8]}/><meshStandardMaterial color="#c6b4a4" roughness={.98}/></mesh>
+    <mesh position={[0,-1.62,-.1]} rotation={[-Math.PI/2,0,0]} receiveShadow><planeGeometry args={[12,8]}/><meshStandardMaterial color="#c6b4a4" roughness={.98}/></mesh>
     <SlatWall/><Shelves/><TallPlant x={-3.62}/><TallPlant x={3.62} mirror/>
-    <mesh position={[0,-1.48,-.05]} rotation={[-Math.PI/2,0,0]} receiveShadow><circleGeometry args={[2.8,64]}/><meshStandardMaterial color="#ded4c8" roughness={1}/></mesh>
-    <mesh position={[0,-1.46,-.05]} rotation={[-Math.PI/2,0,0]}><ringGeometry args={[2.45,2.78,64]}/><meshStandardMaterial color="#e9e0d6" roughness={1} transparent opacity={.82}/></mesh>
+    <mesh position={[0,-1.6,-.05]} rotation={[-Math.PI/2,0,0]} receiveShadow><circleGeometry args={[2.8,64]}/><meshStandardMaterial color="#ded4c8" roughness={1}/></mesh>
+    <mesh position={[0,-1.59,-.05]} rotation={[-Math.PI/2,0,0]}><ringGeometry args={[2.45,2.78,64]}/><meshStandardMaterial color="#e9e0d6" roughness={1} transparent opacity={.82}/></mesh>
   </>;
 }
