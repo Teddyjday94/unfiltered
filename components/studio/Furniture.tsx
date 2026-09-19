@@ -66,8 +66,8 @@ export function BoomMic({side,red=false}:{side:-1|1;red?:boolean}){
 }
 
 export function Furniture(){
-  return <>
+  return <group position={[0,-.07,0]}>
     <CreamChair x={-1.42} rotationY={.08}/><CreamChair x={1.42} rotationY={-.08}/>
     <AcrylicTable/><BoomMic side={-1}/><BoomMic side={1} red/>
-  </>;
+  </group>;
 }
