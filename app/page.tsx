@@ -74,8 +74,9 @@ export default function Home() {
             <Link className="text-btn" href="/studio">ENTER THE STUDIO ↘</Link>
           </div>
         </div>
-        <div className="hero-reference-shot" style={{ backgroundImage: `url(${STUDIO_IMAGE})` }} aria-label="Podcast studio reference image">
-          <span>STUDIO DNA</span><b>WOOD. WARM LIGHT. REAL LOUNGE DETAIL.</b>
+        <div className="hero-reference-shot hero-reference-photo" aria-label="Podcast studio reference image">
+          <StudioPhoto className="hero-reference-img" alt="" />
+          <span>STUDIO DNA</span><b>THE REAL SET, LAYERED IN DEPTH.</b>
         </div>
         <div className="scroll-cue">SCROLL TO ENTER <span>↓</span></div>
       </section>
@@ -116,8 +117,9 @@ export default function Home() {
           <Link className="page-portal portal-crew" href="/crew" style={{ backgroundImage: `url("${CREW_IMAGE}")` }}>
             <span>02 / CREW</span><b>The familiar voices in the room.</b><i>→</i>
           </Link>
-          <Link className="page-portal portal-studio" href="/studio" style={{ backgroundImage: `url("${STUDIO_IMAGE}")` }}>
-            <span>03 / STUDIO</span><b>Walk into the set.</b><i>→</i>
+          <Link className="page-portal portal-studio" href="/studio">
+            <StudioPhoto className="page-portal-photo" alt="" />
+            <span>03 / STUDIO</span><b>Walk into the real set.</b><i>→</i>
           </Link>
         </div>
       </section>
