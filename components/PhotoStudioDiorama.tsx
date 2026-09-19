@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, PointerEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";\nimport type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
 type DioramaProps = {
   interactive?: boolean;
@@ -65,7 +65,7 @@ export default function PhotoStudioDiorama({
     root.style.setProperty("--far-y", `${(clampedY * 0.9).toFixed(2)}px`);
   };
 
-  const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
+  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!motionEnabled) return;
 
     if (interactive && dragRef.current.active) {
@@ -85,7 +85,7 @@ export default function PhotoStudioDiorama({
     }
   };
 
-  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!interactive || !motionEnabled) return;
     dragRef.current = {
       active: true,
@@ -97,7 +97,7 @@ export default function PhotoStudioDiorama({
     event.currentTarget.setPointerCapture(event.pointerId);
   };
 
-  const endDrag = (event: PointerEvent<HTMLDivElement>) => {
+  const endDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!interactive) return;
     dragRef.current.active = false;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
