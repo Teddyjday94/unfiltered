@@ -1,93 +1,40 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import EpisodeArchive from "@/components/EpisodeArchive";
-import AudioBoard from "@/components/AudioBoard";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import { CREW_IMAGE, STUDIO_IMAGE, latestEpisode } from "@/lib/episodes";
 
-const StudioScene = dynamic(() => import("@/components/StudioScene"), { ssr: false, loading: () => <div className="scene-loading">WARMING UP THE STUDIO…</div> });
-
-const CREW_IMAGE = "https://i.pinimg.com/736x/8d/c8/ba/8dc8baf8fb4c5cfd61d486f90e7494d1.jpg";
-const HOSTS_IMAGE = "https://i.insider.com/5e0b7742855cc253b52e4552?format=jpeg&width=618";
-const STUDIO_IMAGE = "https://i.pinimg.com/736x/d9/27/b4/d927b4dd9d336ef4e36bbd1bd7b9c28c.jpg";
-
-const crew = [
-  { name: "ZANE", handle: "@zane", href: "https://www.instagram.com/zane" },
-  { name: "HEATH", handle: "@heathhussar", href: "https://www.instagram.com/heathhussar" },
-  { name: "MARIAH", handle: "@mariahamato", href: "https://www.instagram.com/mariahamato" },
-  { name: "MATT", handle: "@mattrking", href: "https://www.instagram.com/mattrking" },
-];
+const StudioScene = dynamic(() => import("@/components/StudioScene"), {
+  ssr: false,
+  loading: () => <div className="scene-loading">WARMING UP THE STUDIO…</div>,
+});
 
 export default function Home() {
   const [motionEnabled, setMotionEnabled] = useState(true);
-  const [recClicks, setRecClicks] = useState(0);
-  const [easterEgg, setEasterEgg] = useState(false);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) setMotionEnabled(false);
 
     const root = document.documentElement;
-    const toneTargets = Array.from(document.querySelectorAll<HTMLElement>(
-      ".latest, .crew, .archive, .moments, .soundboard, .listen"
-    ));
-    const toneMap: Record<string, string> = {
-      latest: "rgba(242,200,75,.22)",
-      crew: "rgba(86,169,200,.20)",
-      archive: "rgba(237,112,88,.18)",
-      moments: "rgba(201,157,111,.18)",
-      soundboard: "rgba(62,143,135,.20)",
-      listen: "rgba(240,197,90,.18)",
-    };
     let frame = 0;
 
-    toneTargets.forEach((section) => section.classList.add("cinematic-section"));
-
-    const updateMotionVars = () => {
+    const update = () => {
       frame = 0;
       const y = window.scrollY;
       const vh = Math.max(window.innerHeight, 1);
-      const heroProgress = Math.min(Math.max(y / vh, 0), 1);
       const scrollable = Math.max(document.documentElement.scrollHeight - vh, 1);
-      const pageProgress = Math.min(Math.max(y / scrollable, 0), 1);
-      root.style.setProperty("--hero-progress", heroProgress.toFixed(4));
-      root.style.setProperty("--page-progress", pageProgress.toFixed(4));
+      root.style.setProperty("--hero-progress", Math.min(Math.max(y / vh, 0), 1).toFixed(4));
+      root.style.setProperty("--page-progress", Math.min(Math.max(y / scrollable, 0), 1).toFixed(4));
       root.style.setProperty("--hero-shift", `${Math.min(y * 0.12, 110)}px`);
       root.style.setProperty("--hero-copy-shift", `${Math.min(y * 0.055, 52)}px`);
       document.body.classList.toggle("is-scrolled", y > 28);
-
-      let activeSection: HTMLElement | null = null;
-      let closest = Number.POSITIVE_INFINITY;
-      toneTargets.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        const sectionProgress = Math.min(
-          Math.max((vh * 0.78 - rect.top) / Math.max(rect.height + vh * 0.25, 1), 0),
-          1
-        );
-        section.style.setProperty("--section-progress", sectionProgress.toFixed(4));
-
-        const center = Math.abs((rect.top + rect.bottom) / 2 - vh / 2);
-        if (rect.bottom > vh * 0.18 && rect.top < vh * 0.82 && center < closest) {
-          closest = center;
-          activeSection = section;
-        }
-      });
-
-      toneTargets.forEach((section) => section.classList.toggle("is-cinematic-active", section === activeSection));
-      if (activeSection) {
-        const toneKey = ["latest", "crew", "archive", "moments", "soundboard", "listen"]
-          .find((key) => activeSection?.classList.contains(key));
-        if (toneKey) root.style.setProperty("--section-tone", toneMap[toneKey]);
-      } else {
-        root.style.setProperty("--section-tone", "rgba(245,237,225,.08)");
-      }
     };
 
-    const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateMotionVars);
-    };
-
-    const onPointerMove = (event: PointerEvent) => {
+    const pointer = (event: PointerEvent) => {
       if (event.pointerType === "touch") return;
       const x = event.clientX / Math.max(window.innerWidth, 1) - 0.5;
       const y = event.clientY / Math.max(window.innerHeight, 1) - 0.5;
@@ -97,68 +44,28 @@ export default function Home() {
       root.style.setProperty("--tilt-x", `${(-y * 4.2).toFixed(2)}deg`);
     };
 
-    updateMotionVars();
+    const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(update); };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-
-    const revealTargets = Array.from(document.querySelectorAll<HTMLElement>(
-      ".section-kicker, .latest-art, .latest-copy, .crew-photo-wrap, .crew-copy, .archive-tools, .episode-poster, .desk-board, .board-layout, .platform-grid"
-    ));
-
-    revealTargets.forEach((element, index) => {
-      element.classList.add("motion-reveal");
-      element.style.setProperty("--reveal-delay", `${Math.min((index % 5) * 55, 220)}ms`);
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          (entry.target as HTMLElement).classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-
-    revealTargets.forEach((element) => observer.observe(element));
-
+    window.addEventListener("pointermove", pointer, { passive: true });
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("pointermove", onPointerMove);
-      observer.disconnect();
+      window.removeEventListener("pointermove", pointer);
       document.body.classList.remove("is-scrolled");
     };
   }, []);
 
-  const tapRec = () => {
-    const next = recClicks + 1;
-    setRecClicks(next);
-    if (next >= 5) {
-      setEasterEgg(true);
-      setRecClicks(0);
-      window.setTimeout(() => setEasterEgg(false), 3200);
-    }
-  };
-
   return (
-    <main className={`site${easterEgg ? " egg-active" : ""}${motionEnabled ? "" : " motion-off"}`}>
+    <main className={`site multipage-site${motionEnabled ? "" : " motion-off"}`}>
       <div className="noise" aria-hidden="true" />
       <div className="cinema-lights" aria-hidden="true" />
-      <div className="cinema-crossfade" aria-hidden="true" />
-      {easterEgg && <div className="easter-toast" role="status">UNFILTERED MODE // SECRET TAPE FOUND</div>}
-
-      <header className="topbar">
-        <a className="mini-brand" href="#top" aria-label="Unfiltered Studio home"><span>Z + H</span><b>UNFILTERED</b></a>
-        <nav aria-label="Primary navigation">
-          <a href="#latest">LATEST</a><a href="#crew">CREW</a><a href="#archive">ARCHIVE</a><a href="#board">BOARD</a>
-        </nav>
-        <button type="button" className="motion-toggle" onClick={() => setMotionEnabled((v) => !v)} aria-pressed={motionEnabled}>
-          <span className={motionEnabled ? "toggle-dot on" : "toggle-dot"} /> MOTION {motionEnabled ? "ON" : "OFF"}
-        </button>
-      </header>
+      <SiteHeader motionEnabled={motionEnabled} onToggleMotion={() => setMotionEnabled((v) => !v)} />
 
       <section className="hero" id="top">
-        <div className="hero-scene" aria-label="Interactive 3D podcast studio scene"><StudioScene motionEnabled={motionEnabled} /></div>
+        <div className="hero-scene" aria-label="Interactive 3D podcast studio scene">
+          <StudioScene motionEnabled={motionEnabled} />
+        </div>
         <div className="hero-overlay">
           <div className="hero-eyebrow">AN UNOFFICIAL FAN EXPERIENCE</div>
           <div className="hero-title">
@@ -166,60 +73,72 @@ export default function Home() {
             <h1>UNFILTERED</h1>
             <div className="hero-podcast-tag"><span>THE</span><b>PODCAST</b><i /></div>
           </div>
-          <p className="hero-copy">A 3-D FAN-BUILT TRIBUTE TO THE CHAOS,<br />THE COFFEE, AND THE STORIES THAT GO OFF THE RAILS.</p>
-          <div className="hero-actions"><a className="primary-btn" href="#latest">LATEST EPISODE</a><a className="text-btn" href="#archive">ENTER THE ARCHIVE ↘</a></div>
+          <p className="hero-copy">A CINEMATIC, FAN-BUILT TRIBUTE TO THE STUDIO,<br />THE STORIES, AND THE CHAOS BETWEEN THEM.</p>
+          <div className="hero-actions">
+            <Link className="primary-btn" href="/episodes">EXPLORE EPISODES</Link>
+            <Link className="text-btn" href="/studio">ENTER THE STUDIO ↘</Link>
+          </div>
         </div>
-        <div className="hero-reference-shot" style={{ backgroundImage: `url(${STUDIO_IMAGE})` }} aria-label="Podcast studio reference image"><span>STUDIO DNA</span><b>WOOD. WARM LIGHT. BIG CHAIRS.</b></div>
-        <button type="button" className="rec-chip" onClick={tapRec} aria-label="Recording indicator easter egg"><i /> REC <span>00:42:17</span></button>
+        <div className="hero-reference-shot" style={{ backgroundImage: `url(${STUDIO_IMAGE})` }} aria-label="Podcast studio reference image">
+          <span>STUDIO DNA</span><b>WOOD. WARM LIGHT. REAL LOUNGE DETAIL.</b>
+        </div>
         <div className="scroll-cue">SCROLL TO ENTER <span>↓</span></div>
       </section>
 
-      <section className="latest section-shell" id="latest">
+      <section className="latest section-shell home-latest" id="latest">
         <div className="section-kicker">NOW ON DECK</div>
         <div className="latest-grid">
-          <article className="latest-art real-art" style={{ backgroundImage: `linear-gradient(180deg, rgba(9,8,7,.02), rgba(9,8,7,.74)), url(${HOSTS_IMAGE})` }} aria-label="Zane and Heath podcast hosts photo">
-            <div className="tape tape-a">NEW EPISODE</div><div className="tape tape-b">#350</div>
-            <span className="episode-stamp">UNFILTERED</span>
+          <article
+            className="latest-art real-art latest-youtube-art"
+            style={{ backgroundImage: `linear-gradient(180deg, rgba(9,8,7,.02), rgba(9,8,7,.58)), url("${latestEpisode.thumbnail}")` }}
+            aria-label={`Episode ${latestEpisode.number} YouTube thumbnail`}
+          >
+            <div className="tape tape-a">NEW EPISODE</div><div className="tape tape-b">#{latestEpisode.number}</div>
           </article>
-          <div className="latest-copy"><span className="episode-number">EPISODE 350 · SEPTEMBER 14, 2026</span><h2>He Won $1,000,000 Dollars?!?</h2><p>The homepage now tracks the current episode slot instead of stopping at #349. The platform buttons below go to the real show pages.</p><div className="fake-player"><div className="player-line"><i /></div><span>VISUAL SCRUBBER — NOT AUDIO PLAYBACK</span></div><div className="platform-actions"><a href="https://open.spotify.com/show/6goGgtyzjWUzr9kgnWRDZi" target="_blank" rel="noreferrer">SPOTIFY ↗</a><a href="https://www.youtube.com/@ZaneAndHeath" target="_blank" rel="noreferrer">YOUTUBE ↗</a></div></div>
-        </div>
-      </section>
-
-      <section className="crew section-shell" id="crew">
-        <div className="section-kicker">THE FAMILIAR CREW</div>
-        <div className="crew-layout">
-          <figure className="crew-photo-wrap"><img src={CREW_IMAGE} alt="A group photo from the Unfiltered podcast set" /><figcaption>Real podcast imagery replaces the generic silhouette treatment.</figcaption></figure>
-          <div className="crew-copy">
-            <h2>Less placeholder.<br />More personality.</h2>
-            <p>The old four-card silhouette grid is gone. This section now uses a real group image and keeps the names as clean editorial credits instead of trying to fake individual portraits.</p>
-            <div className="crew-credits">
-              {crew.map((person, i) => <a href={person.href} target="_blank" rel="noreferrer" key={person.name}><span>0{i + 1}</span><b>{person.name}</b><small>{person.handle}</small><i>↗</i></a>)}
+          <div className="latest-copy">
+            <span className="episode-number">EPISODE {latestEpisode.number} · {latestEpisode.date.toUpperCase()}</span>
+            <h2>{latestEpisode.title}</h2>
+            <p>MrBeast’s million-dollar puzzle, Austin stories, retro tech, AI, and the usual detours. The newest episode now uses its actual video artwork instead of a generic host photo.</p>
+            {latestEpisode.videoTitle && <div className="video-cut-label">VIDEO CUT · {latestEpisode.videoTitle}</div>}
+            <div className="platform-actions">
+              <Link href="/episodes">OPEN EPISODE WALL →</Link>
+              {latestEpisode.youtubeId && <a href={`https://www.youtube.com/watch?v=${latestEpisode.youtubeId}`} target="_blank" rel="noreferrer">WATCH ↗</a>}
             </div>
           </div>
         </div>
       </section>
 
-      <EpisodeArchive motionEnabled={motionEnabled} />
-
-      <section className="moments section-shell">
-        <div className="section-kicker">UNFILTERED MOMENTS</div>
-        <div className="desk-board">
-          <div className="memo memo-one"><span>CLIP 01</span><b>CLIP COMING SOON</b><i /></div>
-          <div className="memo memo-two"><span>NOTE TO EDITOR</span><b>KEEP THAT IN.</b><small>probably.</small></div>
-          <div className="photo-card real-photo-card"><img src={STUDIO_IMAGE} alt="Unfiltered podcast studio" /><span>THE SET IS PART OF THE PERSONALITY.</span></div>
-          <div className="cue-card"><span>TOPIC CARD</span><b>WHO APPROVED THIS?</b></div>
-          <button type="button" className="coffee-easter" onClick={() => setEasterEgg(true)} aria-label="Hidden coffee cup easter egg"><span /></button>
+      <section className="section-shell explore-pages">
+        <div className="section-kicker">EXPLORE THE EXPERIENCE</div>
+        <div className="section-heading-row">
+          <h2>Four pages.<br />One studio world.</h2>
+          <p>The homepage is now the front door. Episodes, the crew, and the interactive studio each get room to breathe instead of competing for the same scroll.</p>
+        </div>
+        <div className="page-portal-grid">
+          <Link className="page-portal portal-episodes" href="/episodes" style={{ backgroundImage: `url("${latestEpisode.thumbnail}")` }}>
+            <span>01 / EPISODES</span><b>Pull a story off the wall.</b><i>→</i>
+          </Link>
+          <Link className="page-portal portal-crew" href="/crew" style={{ backgroundImage: `url("${CREW_IMAGE}")` }}>
+            <span>02 / CREW</span><b>The familiar voices in the room.</b><i>→</i>
+          </Link>
+          <Link className="page-portal portal-studio" href="/studio" style={{ backgroundImage: `url("${STUDIO_IMAGE}")` }}>
+            <span>03 / STUDIO</span><b>Walk into the set.</b><i>→</i>
+          </Link>
         </div>
       </section>
 
-      <AudioBoard />
-
       <section className="listen section-shell" id="listen">
-        <div className="section-kicker">PLUG IN</div><h2>Pick your platform.<br />Hit play there.</h2>
-        <div className="platform-grid"><a href="https://open.spotify.com/show/6goGgtyzjWUzr9kgnWRDZi" target="_blank" rel="noreferrer"><span>01</span><b>SPOTIFY</b><i>↗</i></a><a href="https://www.youtube.com/@ZaneAndHeath" target="_blank" rel="noreferrer"><span>02</span><b>YOUTUBE</b><i>↗</i></a><a href="https://www.patreon.com/zaneandheath" target="_blank" rel="noreferrer"><span>03</span><b>PATREON</b><i>↗</i></a><a href="https://www.instagram.com/zane" target="_blank" rel="noreferrer"><span>04</span><b>INSTAGRAM</b><i>↗</i></a></div>
+        <div className="section-kicker">PLUG IN</div>
+        <h2>Pick your platform.<br />Hit play there.</h2>
+        <div className="platform-grid">
+          <a href="https://open.spotify.com/show/6goGgtyzjWUzr9kgnWRDZi" target="_blank" rel="noreferrer"><span>01</span><b>SPOTIFY</b><i>↗</i></a>
+          <a href="https://www.youtube.com/@ZaneAndHeath" target="_blank" rel="noreferrer"><span>02</span><b>YOUTUBE</b><i>↗</i></a>
+          <a href="https://www.patreon.com/zaneandheath" target="_blank" rel="noreferrer"><span>03</span><b>PATREON</b><i>↗</i></a>
+          <a href="https://www.instagram.com/zane" target="_blank" rel="noreferrer"><span>04</span><b>INSTAGRAM</b><i>↗</i></a>
+        </div>
       </section>
 
-      <footer><div className="footer-mark">Z + H <span>UNFILTERED</span></div><p>Unofficial fan-made concept. Not affiliated with Zane & Heath or their team.</p><p>Public editorial/podcast imagery is used for this noncommercial mockup; use owned or licensed media for a commercial release.</p></footer>
+      <SiteFooter />
     </main>
   );
 }
