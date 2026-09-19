@@ -1,16 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { CREW_IMAGE, STUDIO_IMAGE, latestEpisode } from "@/lib/episodes";
-
-const StudioScene = dynamic(() => import("@/components/StudioScene"), {
-  ssr: false,
-  loading: () => <div className="scene-loading">WARMING UP THE STUDIO…</div>,
-});
+import { CREW_IMAGE, latestEpisode } from "@/lib/episodes";
+import PhotoStudioDiorama, { StudioPhoto } from "@/components/PhotoStudioDiorama";
 
 export default function Home() {
   const [motionEnabled, setMotionEnabled] = useState(true);
@@ -64,7 +59,7 @@ export default function Home() {
 
       <section className="hero" id="top">
         <div className="hero-scene" aria-label="Interactive 3D podcast studio scene">
-          <StudioScene motionEnabled={motionEnabled} />
+          <PhotoStudioDiorama motionEnabled={motionEnabled} />
         </div>
         <div className="hero-overlay">
           <div className="hero-eyebrow">AN UNOFFICIAL FAN EXPERIENCE</div>
