@@ -3,14 +3,14 @@
 import { useMemo, useState } from "react";
 
 const episodes = [
+  { number: 350, title: "He Won $1,000,000 Dollars?!?", tag: "Challenge" },
   { number: 349, title: "Revealing the Internet's Biggest Influencer Scammers", tag: "Internet Chaos" },
   { number: 348, title: "I'm In Love With A Serial Killer", tag: "Unhinged" },
   { number: 347, title: "Zane's Near Death Experience in South Africa", tag: "Stories" },
   { number: 346, title: "Zane Finally Opens Up About His Parents' Divorce", tag: "Life Updates" },
-  { number: 345, title: "Breaking Down the WORST Kind of Influencers", tag: "Internet Chaos" },
 ];
 
-const tags = ["All", "Stories", "Internet Chaos", "Life Updates", "Unhinged"];
+const tags = ["All", "Challenge", "Stories", "Internet Chaos", "Life Updates", "Unhinged"];
 
 export default function EpisodeArchive() {
   const [query, setQuery] = useState("");
@@ -35,7 +35,7 @@ export default function EpisodeArchive() {
       <div className="archive-tools">
         <label className="search-field">
           <span>Search episodes</span>
-          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Try 347 or influencer…" />
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Try 350 or influencer…" />
         </label>
         <div className="filter-row" aria-label="Episode categories">
           {tags.map((item) => (
