@@ -32,7 +32,7 @@ export default function StudioScene({ motionEnabled, explore = false }: ScenePro
     <Canvas
       shadows
       dpr={[1, 1.5]}
-      camera={{ position: [0, 0.34, 6.25], fov: 42 }}
+      camera={{ position: [0, 0.18, 6.35], fov: 41 }}
       gl={{ antialias: true, alpha: true }}
     >
       <color attach="background" args={["#d8c7b7"]} />
@@ -41,20 +41,20 @@ export default function StudioScene({ motionEnabled, explore = false }: ScenePro
       <StudioLights motionEnabled={motionEnabled} />
       <RoomShell />
       <Furniture />
-      <ContactShadows position={[0, -1.47, 0]} opacity={0.28} scale={9} blur={2.3} far={4.5} />
+      <ContactShadows position={[0, -1.59, 0]} opacity={0.3} scale={9} blur={2.15} far={4.5} />
 
       {explore ? (
         <OrbitControls
           makeDefault
           enablePan={false}
           enableZoom
-          minDistance={5.15}
-          maxDistance={7.2}
-          minPolarAngle={Math.PI * 0.38}
-          maxPolarAngle={Math.PI * 0.58}
-          minAzimuthAngle={-0.32}
-          maxAzimuthAngle={0.32}
-          target={[0, -0.12, -0.72]}
+          minDistance={5.8}
+          maxDistance={6.8}
+          minPolarAngle={Math.PI * 0.46}
+          maxPolarAngle={Math.PI * 0.52}
+          minAzimuthAngle={-0.18}
+          maxAzimuthAngle={0.18}
+          target={[0, -0.22, -0.78]}
           enableDamping
           dampingFactor={0.06}
         />
