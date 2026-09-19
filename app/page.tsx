@@ -1,13 +1,16 @@
 "use client";
 
-// photo-diorama production
-
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { CREW_IMAGE, latestEpisode } from "@/lib/episodes";
-import PhotoStudioDiorama, { StudioPhoto } from "@/components/PhotoStudioDiorama";
+import { CREW_IMAGE, STUDIO_IMAGE, latestEpisode } from "@/lib/episodes";
+
+const StudioScene = dynamic(() => import("@/components/StudioScene"), {
+  ssr: false,
+  loading: () => <div className="scene-loading">WARMING UP THE STUDIO…</div>,
+});
 
 export default function Home() {
   const [motionEnabled, setMotionEnabled] = useState(true);
@@ -61,7 +64,7 @@ export default function Home() {
 
       <section className="hero" id="top">
         <div className="hero-scene" aria-label="Interactive 3D podcast studio scene">
-          <PhotoStudioDiorama motionEnabled={motionEnabled} />
+          <StudioScene motionEnabled={motionEnabled} />
         </div>
         <div className="hero-overlay">
           <div className="hero-eyebrow">AN UNOFFICIAL FAN EXPERIENCE</div>
@@ -76,9 +79,8 @@ export default function Home() {
             <Link className="text-btn" href="/studio">ENTER THE STUDIO ↘</Link>
           </div>
         </div>
-        <div className="hero-reference-shot hero-reference-photo" aria-label="Podcast studio reference image">
-          <StudioPhoto className="hero-reference-img" alt="" />
-          <span>STUDIO DNA</span><b>THE REAL SET, LAYERED IN DEPTH.</b>
+        <div className="hero-reference-shot" style={{ backgroundImage: `url(${STUDIO_IMAGE})` }} aria-label="Podcast studio reference image">
+          <span>STUDIO DNA</span><b>WOOD. WARM LIGHT. REAL LOUNGE DETAIL.</b>
         </div>
         <div className="scroll-cue">SCROLL TO ENTER <span>↓</span></div>
       </section>
@@ -119,9 +121,8 @@ export default function Home() {
           <Link className="page-portal portal-crew" href="/crew" style={{ backgroundImage: `url("${CREW_IMAGE}")` }}>
             <span>02 / CREW</span><b>The familiar voices in the room.</b><i>→</i>
           </Link>
-          <Link className="page-portal portal-studio" href="/studio">
-            <StudioPhoto className="page-portal-photo" alt="" />
-            <span>03 / STUDIO</span><b>Walk into the real set.</b><i>→</i>
+          <Link className="page-portal portal-studio" href="/studio" style={{ backgroundImage: `url("${STUDIO_IMAGE}")` }}>
+            <span>03 / STUDIO</span><b>Walk into the set.</b><i>→</i>
           </Link>
         </div>
       </section>
