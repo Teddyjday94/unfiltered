@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";\nimport type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 
 type DioramaProps = {
   interactive?: boolean;
