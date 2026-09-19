@@ -23,11 +23,11 @@ export default function StudioPage() {
       <div className="noise" aria-hidden="true" />
       <SiteHeader motionEnabled={motionEnabled} onToggleMotion={() => setMotionEnabled((v) => !v)} />
       <section className="studio-page-stage">
-        <div className="studio-page-canvas"><StudioScene motionEnabled={motionEnabled} /></div>
+        <div className="studio-page-canvas"><StudioScene motionEnabled={motionEnabled} explore /></div>\n        <div className="studio-look-hint" aria-hidden="true"><span>DRAG</span><b>LOOK AROUND</b><i>↔</i></div>
         <div className="studio-page-copy">
           <span>THE SET / REBUILT</span>
           <h1>STEP INTO<br />THE STUDIO.</h1>
-          <p>The furniture is now built from defined pieces—separate cushions, arms, legs, tables, fireplace framing, and wall details—so the room reads less like chunky 3-D blobs and more like a designed set.</p>
+          <p>Built from the real set layout: two cream tufted chairs, a translucent orange center table, boom mics, the dark wood slat wall, blue/orange light strips, floating decor shelves, side plants, and the soft rug underneath. Drag the scene to inspect it from different angles.</p>
         </div>
       </section>
       <section className="section-shell studio-reference-layout">
