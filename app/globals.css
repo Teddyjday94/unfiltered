@@ -202,3 +202,25 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .hero-scene:after{background:linear-gradient(0deg,#efe5d8 14%,rgba(239,229,216,.34) 55%,transparent 78%)}
   .cinema-lights{opacity:.24}
 }
+
+
+/* v6 hero visibility refinement */
+.hero-scene:after{
+  background:
+    linear-gradient(90deg,
+      rgba(247,239,227,.58) 0%,
+      rgba(247,239,227,.34) 18%,
+      rgba(247,239,227,.10) 34%,
+      rgba(247,239,227,0) 50%),
+    linear-gradient(0deg,rgba(239,229,216,.82) 0%,rgba(239,229,216,.28) 18%,transparent 36%) !important;
+}
+.hero-overlay{
+  text-shadow:0 1px 0 rgba(255,255,255,.2);
+}
+@media(max-width:760px){
+  .hero-scene:after{
+    background:
+      linear-gradient(0deg,rgba(239,229,216,.82) 8%,rgba(239,229,216,.18) 40%,transparent 70%),
+      linear-gradient(90deg,rgba(247,239,227,.20),transparent 46%) !important;
+  }
+}
