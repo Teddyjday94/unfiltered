@@ -36,7 +36,7 @@ export function CreamChair({x,rotationY}:{x:number;rotationY:number}){
 }
 
 function Drink({x,z,color,height=.36}:{x:number;z:number;color:string;height?:number}){
-  return <group position={[x,-.64,z]}>
+  return <group position={[x,-.81 + height / 2,z]}>
     <mesh castShadow><cylinderGeometry args={[.075,.07,height,18]}/><meshPhysicalMaterial color={color} roughness={.35} metalness={.08}/></mesh>
     <mesh position={[0,height/2+.08,0]}><cylinderGeometry args={[.012,.012,.2,8]}/><meshStandardMaterial color="#2c2a28" roughness={.5}/></mesh>
   </group>;
