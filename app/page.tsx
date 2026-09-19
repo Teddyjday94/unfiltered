@@ -35,7 +35,10 @@ export default function Home() {
       const y = window.scrollY;
       const vh = Math.max(window.innerHeight, 1);
       const heroProgress = Math.min(Math.max(y / vh, 0), 1);
+      const scrollable = Math.max(document.documentElement.scrollHeight - vh, 1);
+      const pageProgress = Math.min(Math.max(y / scrollable, 0), 1);
       root.style.setProperty("--hero-progress", heroProgress.toFixed(4));
+      root.style.setProperty("--page-progress", pageProgress.toFixed(4));
       root.style.setProperty("--hero-shift", `${Math.min(y * 0.12, 110)}px`);
       root.style.setProperty("--hero-copy-shift", `${Math.min(y * 0.055, 52)}px`);
       document.body.classList.toggle("is-scrolled", y > 28);
@@ -101,6 +104,7 @@ export default function Home() {
   return (
     <main className={`site${easterEgg ? " egg-active" : ""}${motionEnabled ? "" : " motion-off"}`}>
       <div className="noise" aria-hidden="true" />
+      <div className="cinema-lights" aria-hidden="true" />
       {easterEgg && <div className="easter-toast" role="status">UNFILTERED MODE // SECRET TAPE FOUND</div>}
 
       <header className="topbar">
