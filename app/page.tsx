@@ -7,11 +7,15 @@ import AudioBoard from "@/components/AudioBoard";
 
 const StudioScene = dynamic(() => import("@/components/StudioScene"), { ssr: false, loading: () => <div className="scene-loading">WARMING UP THE STUDIO…</div> });
 
-const cast = [
-  { name: "ZANE", role: "CHAOS DEPARTMENT", code: "01" },
-  { name: "HEATH", role: "VOICE OF REASON—ISH", code: "02" },
-  { name: "MARIAH", role: "STUDIO ENERGY", code: "03" },
-  { name: "MATT", role: "CONTROLLED CHAOS", code: "04" },
+const CREW_IMAGE = "https://i.pinimg.com/736x/8d/c8/ba/8dc8baf8fb4c5cfd61d486f90e7494d1.jpg";
+const HOSTS_IMAGE = "https://i.insider.com/5e0b7742855cc253b52e4552?format=jpeg&width=618";
+const STUDIO_IMAGE = "https://i.pinimg.com/736x/d9/27/b4/d927b4dd9d336ef4e36bbd1bd7b9c28c.jpg";
+
+const crew = [
+  { name: "ZANE", handle: "@zane", href: "https://www.instagram.com/zane" },
+  { name: "HEATH", handle: "@heathhussar", href: "https://www.instagram.com/heathhussar" },
+  { name: "MARIAH", handle: "@mariahamato", href: "https://www.instagram.com/mariahamato" },
+  { name: "MATT", handle: "@mattrking", href: "https://www.instagram.com/mattrking" },
 ];
 
 export default function Home() {
@@ -42,7 +46,7 @@ export default function Home() {
       <header className="topbar">
         <a className="mini-brand" href="#top" aria-label="Unfiltered Studio home"><span>Z + H</span><b>UNFILTERED</b></a>
         <nav aria-label="Primary navigation">
-          <a href="#latest">LATEST</a><a href="#cast">CAST</a><a href="#archive">ARCHIVE</a><a href="#board">BOARD</a>
+          <a href="#latest">LATEST</a><a href="#crew">CREW</a><a href="#archive">ARCHIVE</a><a href="#board">BOARD</a>
         </nav>
         <button type="button" className="motion-toggle" onClick={() => setMotionEnabled((v) => !v)} aria-pressed={motionEnabled}>
           <span className={motionEnabled ? "toggle-dot on" : "toggle-dot"} /> MOTION {motionEnabled ? "ON" : "OFF"}
@@ -54,9 +58,10 @@ export default function Home() {
         <div className="hero-overlay">
           <div className="hero-eyebrow">AN UNOFFICIAL FAN EXPERIENCE</div>
           <div className="hero-title"><span className="script-line">ZANE + HEATH</span><h1>UNFILTERED</h1><div className="outline-word">PODCAST</div></div>
-          <p className="hero-copy">NO FILTER. NO PLAN.<br />PROBABLY A STORY THEY SHOULDN&apos;T BE TELLING.</p>
+          <p className="hero-copy">A 3-D FAN-BUILT TRIBUTE TO THE CHAOS,<br />THE COFFEE, AND THE STORIES THAT GO OFF THE RAILS.</p>
           <div className="hero-actions"><a className="primary-btn" href="#latest">LATEST EPISODE</a><a className="text-btn" href="#archive">ENTER THE ARCHIVE ↘</a></div>
         </div>
+        <div className="hero-reference-shot" style={{ backgroundImage: `url(${STUDIO_IMAGE})` }} aria-label="Podcast studio reference image"><span>STUDIO DNA</span><b>WOOD. WARM LIGHT. BIG CHAIRS.</b></div>
         <button type="button" className="rec-chip" onClick={tapRec} aria-label="Recording indicator easter egg"><i /> REC <span>00:42:17</span></button>
         <div className="scroll-cue">SCROLL TO ENTER <span>↓</span></div>
       </section>
@@ -64,20 +69,25 @@ export default function Home() {
       <section className="latest section-shell" id="latest">
         <div className="section-kicker">NOW ON DECK</div>
         <div className="latest-grid">
-          <article className="latest-art" aria-label="Episode 349 fan art treatment">
-            <div className="tape tape-a">NEW EPISODE</div><div className="tape tape-b">#349</div>
-            <div className="portrait-silhouettes"><i /><i /></div>
+          <article className="latest-art real-art" style={{ backgroundImage: `linear-gradient(180deg, rgba(9,8,7,.02), rgba(9,8,7,.74)), url(${HOSTS_IMAGE})` }} aria-label="Zane and Heath podcast hosts photo">
+            <div className="tape tape-a">NEW EPISODE</div><div className="tape tape-b">#350</div>
             <span className="episode-stamp">UNFILTERED</span>
           </article>
-          <div className="latest-copy"><span className="episode-number">EPISODE 349</span><h2>Revealing the Internet&apos;s Biggest Influencer Scammers</h2><p>A cinematic fan-site spotlight for the latest episode slot. Plug in official art and exact platform links when you&apos;re ready.</p><div className="fake-player"><div className="player-line"><i /></div><span>VISUAL SCRUBBER — NOT AUDIO PLAYBACK</span></div><div className="platform-actions"><a href="#listen">LISTEN OPTIONS</a><a href="#archive">MORE EPISODES</a></div></div>
+          <div className="latest-copy"><span className="episode-number">EPISODE 350 · SEPTEMBER 14, 2026</span><h2>He Won $1,000,000 Dollars?!?</h2><p>The homepage now tracks the current episode slot instead of stopping at #349. The platform buttons below go to the real show pages.</p><div className="fake-player"><div className="player-line"><i /></div><span>VISUAL SCRUBBER — NOT AUDIO PLAYBACK</span></div><div className="platform-actions"><a href="https://open.spotify.com/show/6goGgtyzjWUzr9kgnWRDZi" target="_blank" rel="noreferrer">SPOTIFY ↗</a><a href="https://www.youtube.com/@ZaneAndHeath" target="_blank" rel="noreferrer">YOUTUBE ↗</a></div></div>
         </div>
       </section>
 
-      <section className="cast section-shell" id="cast">
-        <div className="section-kicker">ON THE MICS</div>
-        <div className="section-heading-row"><h2>Four seats.<br />Zero restraint.</h2><p>Editorial portrait slots are intentionally local placeholders so you can swap in approved photography without redesigning the section.</p></div>
-        <div className="cast-grid">
-          {cast.map((person, i) => <article className="cast-card" key={person.name}><div className={`cast-portrait portrait-${i + 1}`}><span>{person.code}</span><div className="silhouette-head" /><div className="silhouette-body" /></div><div className="cast-meta"><span>{person.role}</span><h3>{person.name}</h3></div></article>)}
+      <section className="crew section-shell" id="crew">
+        <div className="section-kicker">THE FAMILIAR CREW</div>
+        <div className="crew-layout">
+          <figure className="crew-photo-wrap"><img src={CREW_IMAGE} alt="A group photo from the Unfiltered podcast set" /><figcaption>Real podcast imagery replaces the generic silhouette treatment.</figcaption></figure>
+          <div className="crew-copy">
+            <h2>Less placeholder.<br />More personality.</h2>
+            <p>The old four-card silhouette grid is gone. This section now uses a real group image and keeps the names as clean editorial credits instead of trying to fake individual portraits.</p>
+            <div className="crew-credits">
+              {crew.map((person, i) => <a href={person.href} target="_blank" rel="noreferrer" key={person.name}><span>0{i + 1}</span><b>{person.name}</b><small>{person.handle}</small><i>↗</i></a>)}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -88,7 +98,7 @@ export default function Home() {
         <div className="desk-board">
           <div className="memo memo-one"><span>CLIP 01</span><b>CLIP COMING SOON</b><i /></div>
           <div className="memo memo-two"><span>NOTE TO EDITOR</span><b>KEEP THAT IN.</b><small>probably.</small></div>
-          <div className="photo-card"><div className="photo-placeholder">STUDIO<br />FRAME</div><span>THE CAMERA WAS ROLLING.</span></div>
+          <div className="photo-card real-photo-card"><img src={STUDIO_IMAGE} alt="Unfiltered podcast studio" /><span>THE SET IS PART OF THE PERSONALITY.</span></div>
           <div className="cue-card"><span>TOPIC CARD</span><b>WHO APPROVED THIS?</b></div>
           <button type="button" className="coffee-easter" onClick={() => setEasterEgg(true)} aria-label="Hidden coffee cup easter egg"><span /></button>
         </div>
@@ -98,11 +108,10 @@ export default function Home() {
 
       <section className="listen section-shell" id="listen">
         <div className="section-kicker">PLUG IN</div><h2>Pick your platform.<br />Hit play there.</h2>
-        <div className="platform-grid"><a href="#" onClick={(e) => e.preventDefault()}><span>01</span><b>SPOTIFY</b><i>↗</i></a><a href="#" onClick={(e) => e.preventDefault()}><span>02</span><b>YOUTUBE</b><i>↗</i></a><a href="#" onClick={(e) => e.preventDefault()}><span>03</span><b>PATREON</b><i>↗</i></a><a href="#" onClick={(e) => e.preventDefault()}><span>04</span><b>INSTAGRAM</b><i>↗</i></a></div>
-        <p className="link-note">Platform buttons are intentionally inactive until official destination URLs are supplied.</p>
+        <div className="platform-grid"><a href="https://open.spotify.com/show/6goGgtyzjWUzr9kgnWRDZi" target="_blank" rel="noreferrer"><span>01</span><b>SPOTIFY</b><i>↗</i></a><a href="https://www.youtube.com/@ZaneAndHeath" target="_blank" rel="noreferrer"><span>02</span><b>YOUTUBE</b><i>↗</i></a><a href="https://www.patreon.com/zaneandheath" target="_blank" rel="noreferrer"><span>03</span><b>PATREON</b><i>↗</i></a><a href="https://www.instagram.com/zane" target="_blank" rel="noreferrer"><span>04</span><b>INSTAGRAM</b><i>↗</i></a></div>
       </section>
 
-      <footer><div className="footer-mark">Z + H <span>UNFILTERED</span></div><p>Unofficial fan-made concept. Not affiliated with Zane & Heath or their team.</p><p>Built for the love of the podcast.</p></footer>
+      <footer><div className="footer-mark">Z + H <span>UNFILTERED</span></div><p>Unofficial fan-made concept. Not affiliated with Zane & Heath or their team.</p><p>Public editorial/podcast imagery is used for this noncommercial mockup; use owned or licensed media for a commercial release.</p></footer>
     </main>
   );
 }
