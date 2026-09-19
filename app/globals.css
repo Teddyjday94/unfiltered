@@ -606,3 +606,47 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .photo-diorama-frame{left:0;top:0;width:100%;height:100%;aspect-ratio:auto}
   .diorama-cutout,.diorama-blur-patch{display:none}
 }
+
+
+/* v11 grounded modeled studio polish */
+.studio-page-copy{
+  left:clamp(18px,3vw,48px);
+  top:clamp(28px,5vw,62px);
+  transform:none;
+  max-width:360px;
+  padding:18px 20px 20px;
+  background:rgba(247,239,228,.76);
+  border-left:3px solid var(--coral);
+  border-top:1px solid rgba(70,49,39,.12);
+  border-right:1px solid rgba(70,49,39,.08);
+  border-bottom:1px solid rgba(70,49,39,.08);
+  backdrop-filter:blur(10px);
+  box-shadow:0 18px 45px rgba(55,38,29,.12);
+  pointer-events:none;
+}
+.studio-page-copy h1{
+  font-size:clamp(50px,5.2vw,78px);
+  line-height:.82;
+  margin:10px 0 14px;
+}
+.studio-page-copy p{
+  max-width:320px;
+  font-size:12px;
+  line-height:1.55;
+  color:#5d4e45;
+}
+.studio-page-copy>span{font-size:8px}
+.studio-page-stage:after{
+  background:
+    linear-gradient(90deg,rgba(244,236,225,.22) 0%,rgba(244,236,225,.08) 18%,transparent 34%),
+    linear-gradient(0deg,rgba(232,220,207,.14),transparent 18%);
+}
+@media(max-width:760px){
+  .studio-page-copy{
+    left:14px;right:14px;top:auto;bottom:70px;
+    max-width:none;padding:14px 16px 16px;
+    background:rgba(247,239,228,.84);
+  }
+  .studio-page-copy h1{font-size:52px}
+  .studio-page-copy p{font-size:11px;max-width:100%}
+}
