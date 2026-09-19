@@ -29,24 +29,24 @@ export function CreamChair({x,rotationY}:{x:number;rotationY:number}){
       <meshStandardMaterial color="#dfccb3" roughness={.8}/>
     </RoundedBox>)}
     {[-.66,.66].map(lx=><group key={lx}>
-      <mesh position={[lx,-.82,.33]} rotation={[.16,0,lx>0?-.11:.11]} castShadow><boxGeometry args={[.12,.72,.12]}/><meshStandardMaterial color="#4a3126" roughness={.72}/></mesh>
-      <mesh position={[lx,-.82,-.28]} rotation={[-.12,0,lx>0?-.09:.09]} castShadow><boxGeometry args={[.12,.7,.12]}/><meshStandardMaterial color="#4a3126" roughness={.72}/></mesh>
+      <mesh position={[lx,-.6,.33]} rotation={[.08,0,lx>0?-.06:.06]} castShadow><boxGeometry args={[.13,.5,.13]}/><meshStandardMaterial color="#4a3126" roughness={.72}/></mesh>
+      <mesh position={[lx,-.6,-.28]} rotation={[-.06,0,lx>0?-.05:.05]} castShadow><boxGeometry args={[.13,.5,.13]}/><meshStandardMaterial color="#4a3126" roughness={.72}/></mesh>
     </group>)}
   </group>;
 }
 
 function Drink({x,z,color,height=.36}:{x:number;z:number;color:string;height?:number}){
-  return <group position={[x,-.58,z]}>
+  return <group position={[x,-.64,z]}>
     <mesh castShadow><cylinderGeometry args={[.075,.07,height,18]}/><meshPhysicalMaterial color={color} roughness={.35} metalness={.08}/></mesh>
     <mesh position={[0,height/2+.08,0]}><cylinderGeometry args={[.012,.012,.2,8]}/><meshStandardMaterial color="#2c2a28" roughness={.5}/></mesh>
   </group>;
 }
 
 export function AcrylicTable(){
-  return <group position={[0,-.84,-.06]}>
-    <mesh castShadow receiveShadow><cylinderGeometry args={[.62,.62,.1,40]}/><meshPhysicalMaterial color="#f06d1e" transmission={.35} thickness={.18} transparent opacity={.72} roughness={.18}/></mesh>
-    <mesh position={[0,-.48,0]} castShadow><cylinderGeometry args={[.43,.43,.74,40,1,true]}/><meshPhysicalMaterial color="#f06416" transmission={.5} thickness={.12} transparent opacity={.48} roughness={.12} side={THREE.DoubleSide}/></mesh>
-    <mesh position={[0,-.85,0]} castShadow><cylinderGeometry args={[.52,.52,.08,40]}/><meshPhysicalMaterial color="#ee6a19" transmission={.35} transparent opacity={.6} roughness={.16}/></mesh>
+  return <group position={[0,0,-.06]}>
+    <mesh position={[0,-.86,0]} castShadow receiveShadow><cylinderGeometry args={[.62,.62,.1,40]}/><meshPhysicalMaterial color="#f06d1e" transmission={.35} thickness={.18} transparent opacity={.72} roughness={.18}/></mesh>
+    <mesh position={[0,-1.17,0]} castShadow><cylinderGeometry args={[.43,.43,.56,40,1,true]}/><meshPhysicalMaterial color="#f06416" transmission={.5} thickness={.12} transparent opacity={.48} roughness={.12} side={THREE.DoubleSide}/></mesh>
+    <mesh position={[0,-1.46,0]} castShadow receiveShadow><cylinderGeometry args={[.52,.52,.08,40]}/><meshPhysicalMaterial color="#ee6a19" transmission={.35} transparent opacity={.6} roughness={.16}/></mesh>
     <Drink x={-.24} z={.02} color="#e7792e" height={.5}/><Drink x={.28} z={.04} color="#b52d36" height={.38}/><Drink x={-.02} z={-.1} color="#d7d9d5" height={.42}/>
   </group>;
 }
