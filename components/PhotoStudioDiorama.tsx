@@ -55,8 +55,14 @@ export default function PhotoStudioDiorama({
     const clampedX = Math.max(-1, Math.min(1, x));
     const clampedY = Math.max(-1, Math.min(1, y));
     motionRef.current = { x: clampedX, y: clampedY };
-    root.style.setProperty("--diorama-x", clampedX.toFixed(4));
-    root.style.setProperty("--diorama-y", clampedY.toFixed(4));
+    root.style.setProperty("--frame-ry", `${(clampedX * 1.15).toFixed(3)}deg`);
+    root.style.setProperty("--frame-rx", `${(-clampedY * 0.72).toFixed(3)}deg`);
+    root.style.setProperty("--mid-x", `${(-clampedX * 4.8).toFixed(2)}px`);
+    root.style.setProperty("--mid-y", `${(-clampedY * 2.8).toFixed(2)}px`);
+    root.style.setProperty("--near-x", `${(-clampedX * 7.4).toFixed(2)}px`);
+    root.style.setProperty("--near-y", `${(-clampedY * 4.2).toFixed(2)}px`);
+    root.style.setProperty("--far-x", `${(clampedX * 1.5).toFixed(2)}px`);
+    root.style.setProperty("--far-y", `${(clampedY * 0.9).toFixed(2)}px`);
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
