@@ -15,14 +15,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Download full-quality hero
+      - name: Download original hero
         env:
-          HERO_URL: "https://media.canva.com/v2/image-resize/format:PNG/height:941/quality:100/uri:ifs%3A%2F%2FM%2Fd707cac1-fd73-4ed5-94f5-44e65209ba28/watermark:F/width:1672?csig=AAAAAAAAAAAAAAAAAAAAAIIMOgztuQ3Y2mMjepmfPe0DIGyEca5eW41vPJMEhX5a&exp=1789931819&osig=AAAAAAAAAAAAAAAAAAAAAHYYg1MVwRAsYU11N0nrL-15hGMw9RqXuMPGSJULVm87&signer=media-rpc&x-canva-quality=thumbnail"
+          HERO_URL: "https://d2ol7oe51mr4n9.cloudfront.net/user_3Ghx6eM94FIgc0dL0R4UmDe1Olz/07ef2fda-c7dc-4de1-9912-ff4f9ef7a9c1.png"
         run: |
-          curl -fL "$HERO_URL" -o public/hero-studio.png
+          curl -fL "$HERO_URL" -o public/hero-studio-hq.png
           python - <<'PY'
           import os, struct
-          p="public/hero-studio.png"
+          p="public/hero-studio-hq.png"
           size=os.path.getsize(p)
           with open(p,"rb") as f:
               head=f.read(24)
@@ -30,8 +30,8 @@ jobs:
               raise SystemExit("Downloaded file is not PNG")
           w,h=struct.unpack(">II",head[16:24])
           print("hero bytes:",size,"dimensions:",w,h)
-          if size < 200_000 or w < 1600 or h < 900:
-              raise SystemExit("Hero asset is still too small")
+          if size < 2_000_000 or w != 1672 or h != 941:
+              raise SystemExit("Hero asset verification failed")
           PY
       - name: Point site to HQ asset
         run: |
@@ -39,13 +39,13 @@ jobs:
           from pathlib import Path
           p=Path("lib/episodes.ts")
           s=p.read_text()
-          s=s.replace('export const HERO_IMAGE = "/hero-studio.webp";','export const HERO_IMAGE = "/hero-studio.png";')
+          s=s.replace('export const HERO_IMAGE = "/hero-studio.webp";','export const HERO_IMAGE = "/hero-studio-hq.png";')
           p.write_text(s)
           PY
       - name: Commit HQ hero
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/hero-studio.png lib/episodes.ts
-          git commit -m "Use full-quality hero studio image [asset-sync]"
+          git add public/hero-studio-hq.png lib/episodes.ts
+          git commit -m "Use original-quality hero studio image"
           git push origin HEAD:main
