@@ -749,7 +749,7 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
 .crew-story-card:nth-child(even){grid-template-columns:minmax(0,1.24fr) minmax(270px,.76fr)}
 .crew-story-card:nth-child(even) .crew-story-visual{order:2}
 .crew-story-card:nth-child(even) .crew-story-content{order:1}
-.crew-story-visual{position:relative;min-height:520px;background-size:220% auto;background-repeat:no-repeat;overflow:hidden;isolation:isolate}
+.crew-story-visual{position:relative;min-height:520px;background-size:cover;background-repeat:no-repeat;overflow:hidden;isolation:isolate}
 .crew-story-visual:before{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(31,22,18,.02),rgba(31,22,18,.34) 60%,rgba(31,22,18,.78));z-index:1}
 .crew-story-shade{position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(24,18,15,.76),transparent 48%),linear-gradient(90deg,rgba(240,193,145,.08),transparent 48%);mix-blend-mode:multiply}
 .crew-story-number{position:absolute;top:22px;left:22px;z-index:2;border:1px solid rgba(255,255,255,.38);padding:8px 10px;color:#fff7ee;font-size:9px;letter-spacing:.18em;background:rgba(27,19,16,.15);backdrop-filter:blur(8px)}
@@ -777,7 +777,7 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .crew-stories-heading{grid-template-columns:1fr;gap:24px}
   .crew-story-card,.crew-story-card:nth-child(even){grid-template-columns:1fr}
   .crew-story-card:nth-child(even) .crew-story-visual,.crew-story-card:nth-child(even) .crew-story-content{order:initial}
-  .crew-story-visual{min-height:440px;background-size:150% auto}
+  .crew-story-visual{min-height:440px;background-size:cover}
   .crew-story-card{min-height:0}
 }
 
@@ -786,7 +786,7 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .crew-mini-index b{font-size:22px}.crew-mini-index small{font-size:8px;line-height:1.3}
   .crew-stories{padding-top:84px}
   .crew-stories-heading h2{font-size:68px}
-  .crew-story-visual{min-height:360px;background-size:190% auto}
+  .crew-story-visual{min-height:360px;background-size:cover}
   .crew-story-content{padding:30px 22px 34px}
   .crew-story-intro-copy{font-size:21px;margin-bottom:24px}
   .crew-story-beat{grid-template-columns:1fr;gap:7px;padding:22px 0}

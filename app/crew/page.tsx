@@ -23,6 +23,7 @@ type CrewStory = {
   deck: string;
   intro: string;
   accent: string;
+  image: string;
   position: string;
   beats: StoryBeat[];
 };
@@ -37,7 +38,8 @@ const crewStories: CrewStory[] = [
     intro:
       "Zane has made the before-and-after part of the story. Two of his biggest public chapters — his hair-transplant vlog and his later Xeela fitness run — became long-form pieces of content instead of private footnotes.",
     accent: "Z",
-    position: "22% center",
+    image: "/crew/zane.png",
+    position: "center 42%",
     beats: [
       {
         year: "2019",
@@ -78,7 +80,8 @@ const crewStories: CrewStory[] = [
     intro:
       "Heath’s biggest recent life updates have happened right alongside the show: planning a wedding with Mariah, getting married, and then introducing their son to the Unfiltered audience.",
     accent: "H",
-    position: "44% center",
+    image: "/crew/heath.png",
+    position: "center 42%",
     beats: [
       {
         year: "2024–25",
@@ -119,7 +122,8 @@ const crewStories: CrewStory[] = [
     intro:
       "Mariah has always been more than the person chiming in from off camera. Her dance background, the wedding story with Heath, and her return after having Tony have all become part of the show’s ongoing lore.",
     accent: "M",
-    position: "67% center",
+    image: "/crew/mariah.png",
+    position: "center 40%",
     beats: [
       {
         year: "2025",
@@ -156,7 +160,8 @@ const crewStories: CrewStory[] = [
     intro:
       "Matt’s relationship with Patricia became one of the crew’s clearest real-life story arcs: a missed connection, an Instagram search, a proposal, and eventually a Birmingham wedding.",
     accent: "K",
-    position: "84% center",
+    image: "/crew/matt.png",
+    position: "55% center",
     beats: [
       {
         year: "2018–22",
@@ -243,7 +248,7 @@ export default function CrewPage() {
         <div className="crew-story-stack">
           {crewStories.map((person, index) => (
             <article className="crew-story-card" id={`crew-${person.name.toLowerCase()}`} key={person.name}>
-              <div className="crew-story-visual" style={{ backgroundImage: `url("${CREW_IMAGE}")`, backgroundPosition: person.position }}>
+              <div className="crew-story-visual" style={{ backgroundImage: `url("${person.image}")`, backgroundPosition: person.position }}>
                 <span className="crew-story-number">0{index + 1}</span>
                 <b className="crew-story-monogram">{person.accent}</b>
                 <div className="crew-story-shade" />
