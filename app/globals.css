@@ -794,3 +794,38 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .crew-story-beat-copy h3{font-size:26px}
   .crew-source-note{grid-template-columns:1fr;gap:7px}
 }
+
+/* v11 expanded crew documentary timeline */
+.crew-lore-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:28px}
+.crew-lore-stats>div{padding:17px 14px 15px;border:1px solid rgba(58,39,31,.15);background:rgba(255,255,255,.18);display:grid;gap:4px}
+.crew-lore-stats strong{font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif;font-size:31px;line-height:1;color:#3b2a23;letter-spacing:.02em}
+.crew-lore-stats span{font-size:8px;letter-spacing:.16em;font-weight:900;color:#8a7164}
+
+.crew-story-card{overflow:visible;align-items:start}
+.crew-story-visual{position:sticky;top:94px;height:min(72vh,740px);min-height:560px;align-self:start;box-shadow:0 24px 55px rgba(81,49,34,.12)}
+.crew-story-content{justify-content:flex-start;min-width:0}
+.crew-story-id-meta{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin-top:8px}
+.crew-story-id-meta>span{font-size:8px;letter-spacing:.16em;font-weight:900;color:#f2c67c;border:1px solid rgba(255,255,255,.3);padding:7px 9px;background:rgba(17,12,10,.2);backdrop-filter:blur(8px)}
+.crew-story-id .crew-story-id-meta a{margin-top:0}
+.crew-story-timeline{position:relative}
+.crew-story-beat{position:relative;padding-left:8px}
+.crew-story-beat:before{content:"";position:absolute;left:-1px;top:30px;width:7px;height:7px;border-radius:50%;background:#b44a38;box-shadow:0 0 0 5px rgba(180,74,56,.12)}
+.crew-story-year{display:grid;align-content:start;gap:7px;padding-left:12px}
+.crew-story-year>span{font-family:Arial,sans-serif;font-size:8px;line-height:1;letter-spacing:.16em;color:#9b7668;font-weight:900}
+.crew-story-beat-copy h3{font-size:clamp(27px,2.3vw,35px)}
+.crew-story-beat-copy p{font-size:13.5px;line-height:1.72}
+.crew-source-row a{border-radius:999px;padding:9px 12px}
+
+@media(max-width:1000px){
+  .crew-story-card{overflow:hidden}
+  .crew-story-visual{position:relative;top:auto;height:auto;min-height:500px;box-shadow:none}
+}
+
+@media(max-width:640px){
+  .crew-lore-stats{grid-template-columns:1fr 1fr}
+  .crew-lore-stats>div:last-child{grid-column:1/-1}
+  .crew-story-visual{min-height:420px}
+  .crew-story-beat{padding-left:0}
+  .crew-story-beat:before{display:none}
+  .crew-story-year{padding-left:0;display:flex;align-items:center;gap:10px}
+}
