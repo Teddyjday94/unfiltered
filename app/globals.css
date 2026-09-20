@@ -834,3 +834,13 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .crew-story-beat:before{display:none}
   .crew-story-year{padding-left:0;display:flex;align-items:center;gap:10px}
 }
+
+.icon-inline{display:inline-flex;align-items:center;justify-content:center;line-height:0;vertical-align:middle}.icon-inline svg{display:block;width:1em;height:1em}.text-btn,.platform-actions a,.crew-source-row a,.crew-story-id-meta a{display:inline-flex;align-items:center;gap:.45em}.scroll-cue span,.page-portal i,.platform-grid i,.crew-mini-index i,.studio-look-hint i,.poster-action .icon-inline,.modal-close .icon-inline{display:inline-flex;align-items:center;justify-content:center}.platform-grid i,.page-portal i{width:1em;height:1em}.modal-close .icon-inline{width:1.05em;height:1.05em}.crew-story-id-meta a,.crew-source-row a{gap:.4em}
+
+@media(max-width:640px){
+  .icon-inline svg{width:1.16em;height:1.16em;stroke-width:2.35}
+  .page-portal .icon-inline svg,.platform-grid .icon-inline svg{width:1.28em;height:1.28em;stroke-width:2.45}
+  .crew-mini-index .icon-inline svg,.studio-look-hint .icon-inline svg{width:1.2em;height:1.2em;stroke-width:2.4}
+  .modal-close .icon-inline svg{width:1.18em;height:1.18em;stroke-width:2.5}
+  .text-btn,.platform-actions a,.crew-source-row a,.crew-story-id-meta a{gap:.55em}
+}
