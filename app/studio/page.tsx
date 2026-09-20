@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import AudioBoard from "@/components/AudioBoard";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { ArrowLeftRightIcon } from "@/components/Icons";
 import { STUDIO_IMAGE } from "@/lib/episodes";
 
 const StudioScene = dynamic(() => import("@/components/StudioScene"), {
@@ -24,7 +25,7 @@ export default function StudioPage() {
       <SiteHeader motionEnabled={motionEnabled} onToggleMotion={() => setMotionEnabled((v) => !v)} />
       <section className="studio-page-stage">
         <div className="studio-page-canvas"><StudioScene motionEnabled={motionEnabled} explore /></div>
-        <div className="studio-look-hint" aria-hidden="true"><span>DRAG</span><b>LOOK AROUND</b><i>↔</i></div>
+        <div className="studio-look-hint" aria-hidden="true"><span>DRAG</span><b>LOOK AROUND</b><i className="icon-inline"><ArrowLeftRightIcon /></i></div>
         <div className="studio-page-copy">
           <span>THE SET / REBUILT</span>
           <h1>STEP INTO<br />THE STUDIO.</h1>
