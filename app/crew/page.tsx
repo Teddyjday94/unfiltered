@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { ArrowDownIcon, ArrowUpRightIcon } from "@/components/Icons";
 import { CREW_IMAGE } from "@/lib/episodes";
 
 type StoryLink = {
@@ -461,7 +462,7 @@ export default function CrewPage() {
                   <span>0{index + 1}</span>
                   <b>{person.name}</b>
                   <small>{person.deck}</small>
-                  <i>↓</i>
+                  <i className="icon-inline"><ArrowDownIcon /></i>
                 </a>
               ))}
             </div>
@@ -492,7 +493,7 @@ export default function CrewPage() {
                   <strong>{person.name}</strong>
                   <div className="crew-story-id-meta">
                     <span>{person.beats.length} CHAPTERS</span>
-                    <a href={person.href} target="_blank" rel="noreferrer">{person.handle} ↗</a>
+                    <a href={person.href} target="_blank" rel="noreferrer">{person.handle} <span className="icon-inline"><ArrowUpRightIcon /></span></a>
                   </div>
                 </div>
               </div>
@@ -513,7 +514,7 @@ export default function CrewPage() {
                         <p>{beat.copy}</p>
                         <div className="crew-source-row">
                           {beat.links.map((link) => (
-                            <a href={link.href} target="_blank" rel="noreferrer" key={link.href}>{link.label} ↗</a>
+                            <a href={link.href} target="_blank" rel="noreferrer" key={link.href}>{link.label} <span className="icon-inline"><ArrowUpRightIcon /></span></a>
                           ))}
                         </div>
                       </div>
