@@ -1,4 +1,5 @@
 export const STUDIO_IMAGE = "https://i.pinimg.com/736x/d9/27/b4/d927b4dd9d336ef4e36bbd1bd7b9c28c.jpg";
+export const HERO_IMAGE = "/hero-studio.webp";
 export const CREW_IMAGE = "https://i.pinimg.com/736x/8d/c8/ba/8dc8baf8fb4c5cfd61d486f90e7494d1.jpg";
 
 export type Episode = {

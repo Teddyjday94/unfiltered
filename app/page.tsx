@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
-import { CREW_IMAGE, STUDIO_IMAGE, latestEpisode } from "@/lib/episodes";
+import { CREW_IMAGE, HERO_IMAGE, STUDIO_IMAGE, latestEpisode } from "@/lib/episodes";
 
 const StudioScene = dynamic(() => import("@/components/StudioScene"), {
   ssr: false,
@@ -81,7 +81,7 @@ export default function Home() {
             <Link className="text-btn" href="/studio">ENTER THE STUDIO ↘</Link>
           </div>
         </div>
-        <div className="hero-reference-shot" style={{ backgroundImage: `url(${STUDIO_IMAGE})` }} aria-label="Podcast studio reference image">
+        <div className="hero-reference-shot" style={{ backgroundImage: `url(${HERO_IMAGE})` }} aria-label="Podcast studio reference image">
           <span>STUDIO DNA</span><b>WOOD. WARM LIGHT. REAL LOUNGE DETAIL.</b>
         </div>
         <div className="scroll-cue">SCROLL TO ENTER <span>↓</span></div>
