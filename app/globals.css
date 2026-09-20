@@ -690,3 +690,39 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
 @media(max-width:760px){
   .hero-reference-3d-scene{inset:-8% -22% -12%}
 }
+
+
+/* v13 static studio hero image */
+.hero-photo-scene{
+  background-size:cover!important;
+  background-position:center center!important;
+  background-repeat:no-repeat!important;
+  background-color:#2e221d;
+}
+.hero-photo-scene canvas{display:none!important}
+.hero-photo-scene:after{
+  background:
+    linear-gradient(90deg,
+      rgba(247,239,227,.52) 0%,
+      rgba(247,239,227,.24) 20%,
+      rgba(247,239,227,.06) 38%,
+      transparent 54%),
+    linear-gradient(0deg,
+      rgba(239,229,216,.62) 0%,
+      rgba(239,229,216,.15) 18%,
+      transparent 34%) !important;
+}
+.hero-reference-shot{
+  background-size:cover;
+  background-position:center;
+}
+@media(max-width:760px){
+  .hero-photo-scene{
+    background-position:center center!important;
+  }
+  .hero-photo-scene:after{
+    background:
+      linear-gradient(0deg,rgba(239,229,216,.72) 4%,rgba(239,229,216,.18) 42%,transparent 72%),
+      linear-gradient(90deg,rgba(247,239,227,.18),transparent 48%) !important;
+  }
+}
