@@ -90,7 +90,7 @@ const crewStories: CrewStory[] = [
         ],
       },
       {
-        year: "2023–24",
+        year: "2023-24",
         title: "THE XEELA TRANSFORMATION",
         copy:
           "After an earlier attempt did not stick, Zane returned to the Xeela process and made the full transformation part of his public story. Men’s Health later profiled how the months-long run changed not only his physique but also his everyday routines around food, drinking, going out, and training.",
@@ -106,7 +106,7 @@ const crewStories: CrewStory[] = [
         ],
       },
       {
-        year: "2024–NOW",
+        year: "2024-NOW",
         title: "BASICALLY UNFILTERED",
         copy:
           "Zane and Heath added another weekly format with Basically Unfiltered, teaming with Pretty Basic hosts Remi Cruz and Alisha Marie. The crossover gave the duo a second podcast lane while the original Unfiltered continued.",
@@ -159,7 +159,7 @@ const crewStories: CrewStory[] = [
         year: "2020",
         title: "FROM COFFEE TALK TO KRAMODA",
         copy:
-          "The pair built Kramoda out of the coffee-talk identity surrounding their content. Coverage of the launch tied the brand directly back to the conversations that eventually became Unfiltered — making it one of the clearest examples of the show turning into a real-world business.",
+          "The pair built Kramoda out of the coffee-talk identity surrounding their content. Coverage of the launch tied the brand directly back to the conversations that eventually became Unfiltered, making it one of the clearest examples of the show turning into a real-world business.",
         links: [
           {
             label: "READ THE LAUNCH STORY",
@@ -230,9 +230,9 @@ const crewStories: CrewStory[] = [
     role: "CREW",
     handle: "@mariahamato",
     href: "https://www.instagram.com/mariahamato",
-    deck: "THE STORY BEFORE — AND BEYOND — THE SIDE MIC",
+    deck: "THE STORY BEFORE, AND BEYOND, THE SIDE MIC",
     intro:
-      "Mariah's story starts well before Unfiltered. Dance, teaching, moving into the Los Angeles creator world, the show, marriage, and motherhood all sit on the same timeline — which makes her profile much bigger than simply being 'Heath's wife.'",
+      "Mariah's story starts well before Unfiltered. Dance, teaching, moving into the Los Angeles creator world, the show, marriage, and motherhood all sit on the same timeline. That makes her profile much bigger than simply being 'Heath's wife.'",
     accent: "M",
     image: "/crew/mariah.png",
     position: "center 40%",
@@ -265,7 +265,7 @@ const crewStories: CrewStory[] = [
         year: "2019",
         title: "PART OF UNFILTERED FROM THE BEGINNING",
         copy:
-          "Mariah was not a late addition to the show's personality. By episode three of Unfiltered, the episode description was already calling out a game moderated by Matt and Mariah — establishing the four-person chemistry almost immediately.",
+          "Mariah was not a late addition to the show's personality. By episode three of Unfiltered, the episode description was already calling out a game moderated by Matt and Mariah, establishing the four-person chemistry almost immediately.",
         links: [
           {
             label: "EARLY EPISODE ARCHIVE",
@@ -274,7 +274,7 @@ const crewStories: CrewStory[] = [
         ],
       },
       {
-        year: "2020–24",
+        year: "2020-24",
         title: "THE CREW ROLE BECOMES ITS OWN THING",
         copy:
           "Across podcast appearances and interviews, Mariah increasingly became a voice in the conversation rather than background production. Her dance stories, family stories, opinions, and relationship updates gave the show a perspective that was distinctly hers.",
@@ -305,7 +305,7 @@ const crewStories: CrewStory[] = [
         year: "2026",
         title: "MOTHERHOOD ENTERS THE STORY",
         copy:
-          "The show introduced baby Antonio in early January. One week later, Mariah returned for an episode centered on her pregnancy, delivery-room experience, and the first stretch of parenthood — telling the family milestone in her own voice rather than only through Heath's perspective.",
+          "The show introduced baby Antonio in early January. One week later, Mariah returned for an episode centered on her pregnancy, delivery-room experience, and the first stretch of parenthood, telling the family milestone in her own voice rather than only through Heath's perspective.",
         links: [
           {
             label: "MEET ANTONIO",
@@ -368,7 +368,7 @@ const crewStories: CrewStory[] = [
         ],
       },
       {
-        year: "2020–25",
+        year: "2020-25",
         title: "HOOT & A HALF",
         copy:
           "Matt launched Hoot & a Half in 2020 and built it around longer conversations with friends, creators, musicians, and actors. Apple Podcasts lists 130 episodes through 2025, giving Matt a separate lane where he could be the primary interviewer and storyteller.",
@@ -380,7 +380,7 @@ const crewStories: CrewStory[] = [
         ],
       },
       {
-        year: "2022–25",
+        year: "2022-25",
         title: "GOOD INFLUENCES",
         copy:
           "Hoot & a Half eventually helped spark another group show: Good Influences with Matt, Mike Sheffer, Carly Incontro, and Erin Gilfoy. The four later described the idea as growing naturally out of guest appearances, and the show wrapped with a final episode in September 2025.",
@@ -392,7 +392,7 @@ const crewStories: CrewStory[] = [
         ],
       },
       {
-        year: "2018–23",
+        year: "2018-23",
         title: "MATT + PATRICIA",
         copy:
           "The Knot traced Matt and Patricia Flach's story back to an SEC football championship-party weekend in 2018, followed by a missed connection, an Instagram search, and a later reunion. Matt proposed during a private Los Angeles picnic in October 2022.",
@@ -448,12 +448,12 @@ export default function CrewPage() {
             <div className="section-kicker">MORE THAN A ROLL CALL</div>
             <h2>Everybody has<br />a running story.</h2>
             <p>
-              The crew page now works like a living scrapbook: {totalChapters} public chapters across four people. Each profile follows the career moves, projects, relationships, transformations, and family milestones they have chosen to share publicly — with the original source attached to every chapter.
+              The crew page now works like a living scrapbook: {totalChapters} public chapters across four people. Each profile follows the career moves, projects, relationships, transformations, and family milestones they have chosen to share publicly, with the original source attached to every chapter.
             </p>
             <div className="crew-lore-stats" aria-label="Crew lore totals">
               <div><strong>{crewStories.length}</strong><span>CREW FILES</span></div>
               <div><strong>{totalChapters}</strong><span>STORY CHAPTERS</span></div>
-              <div><strong>2014–26</strong><span>ERA COVERED</span></div>
+              <div><strong>2014-26</strong><span>ERA COVERED</span></div>
             </div>
             <div className="crew-mini-index" aria-label="Crew index">
               {crewStories.map((person, index) => (
@@ -476,7 +476,7 @@ export default function CrewPage() {
             <h2 id="crew-stories-title">THE THINGS<br />THAT BECAME LORE.</h2>
           </div>
           <p>
-            Scroll each file like a mini documentary. The portrait stays with you while the timeline moves through the chapters — and every “watch” or “read” button leads back to public material instead of rumor.
+            Scroll each file like a mini documentary. The portrait stays with you while the timeline moves through the chapters. Every “watch” or “read” button leads back to public material instead of rumor.
           </p>
         </div>
 

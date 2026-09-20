@@ -141,7 +141,7 @@ export default function PhotoStudioDiorama({
           <div className="diorama-vignette" aria-hidden="true" />
         </div>
       ) : (
-        <div className="scene-loading">DEVELOPING THE STUDIO…</div>
+        <div className="scene-loading">DEVELOPING THE STUDIO...</div>
       )}
     </div>
   );

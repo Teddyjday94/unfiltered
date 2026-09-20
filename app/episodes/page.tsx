@@ -18,7 +18,7 @@ export default function EpisodesPage() {
       <div className="cinema-lights" aria-hidden="true" />
       <SiteHeader motionEnabled={motionEnabled} onToggleMotion={() => setMotionEnabled((v) => !v)} />
       <section className="page-hero episodes-page-hero" style={{ "--page-hero-image": `url("${latestEpisode.thumbnail}")` } as React.CSSProperties}>
-        <div><span>EPISODES / 346—350</span><h1>THE<br />ARCHIVE</h1><p>Real thumbnail artwork, search, filters, and a scroll-driven tape wall.</p></div>
+        <div><span>EPISODES / 346-350</span><h1>THE<br />ARCHIVE</h1><p>Real thumbnail artwork, search, filters, and a scroll-driven tape wall.</p></div>
       </section>
       <EpisodeArchive motionEnabled={motionEnabled} />
       <SiteFooter />

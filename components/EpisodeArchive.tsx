@@ -82,7 +82,7 @@ export default function EpisodeArchive({ motionEnabled }: ArchiveProps) {
         <div className="archive-tools">
           <label className="search-field">
             <span>Search episodes</span>
-            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Try 350 or influencer…" />
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Try 350 or influencer..." />
           </label>
           <div className="filter-row" aria-label="Episode categories">
             {tags.map((item) => (

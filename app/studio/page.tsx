@@ -9,7 +9,7 @@ import { STUDIO_IMAGE } from "@/lib/episodes";
 
 const StudioScene = dynamic(() => import("@/components/StudioScene"), {
   ssr: false,
-  loading: () => <div className="scene-loading">WARMING UP THE STUDIO…</div>,
+  loading: () => <div className="scene-loading">WARMING UP THE STUDIO...</div>,
 });
 
 export default function StudioPage() {
