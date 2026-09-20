@@ -650,3 +650,43 @@ footer{background:#2f241f;color:#cdbeb2;border-top-color:rgba(255,255,255,.08)}
   .studio-page-copy h1{font-size:52px}
   .studio-page-copy p{font-size:11px;max-width:100%}
 }
+
+
+/* v12 Studio DNA 3D preview */
+.hero-reference-3d{
+  background:#d8c7b7!important;
+  overflow:hidden;
+  isolation:isolate;
+}
+.hero-reference-3d-scene{
+  position:absolute;
+  inset:-14% -10% -18%;
+  z-index:0;
+  pointer-events:none;
+}
+.hero-reference-3d-scene canvas{
+  width:100%!important;
+  height:100%!important;
+  display:block;
+}
+.hero-reference-3d:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(25,18,15,.03) 35%,rgba(25,18,15,.72) 100%),
+    linear-gradient(90deg,rgba(255,255,255,.06),transparent 42%);
+}
+.hero-reference-3d span,
+.hero-reference-3d b{
+  position:relative;
+  z-index:2;
+}
+.hero-reference-3d b{
+  max-width:190px;
+}
+@media(max-width:760px){
+  .hero-reference-3d-scene{inset:-8% -22% -12%}
+}
