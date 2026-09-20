@@ -1,4 +1,4 @@
-# Unfiltered Studio — custom 3D fan concept
+# Unfiltered Studio | custom 3D fan concept
 
 A custom Next.js + React Three Fiber fan-site concept inspired by **Zane and Heath: Unfiltered**. This version is independent of Lovable and is designed for Vercel deployment.
 
