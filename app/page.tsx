@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { ArrowDownIcon, ArrowDownRightIcon, ArrowRightIcon, ArrowUpRightIcon } from "@/components/Icons";
 import { CREW_IMAGE, HERO_IMAGE, STUDIO_IMAGE, latestEpisode } from "@/lib/episodes";
 
 export default function Home() {
@@ -75,13 +76,13 @@ export default function Home() {
           <p className="hero-copy">A CINEMATIC, FAN-BUILT TRIBUTE TO THE STUDIO,<br />THE STORIES, AND THE CHAOS BETWEEN THEM.</p>
           <div className="hero-actions">
             <Link className="primary-btn" href="/episodes">EXPLORE EPISODES</Link>
-            <Link className="text-btn" href="/studio">ENTER THE STUDIO ↘</Link>
+            <Link className="text-btn" href="/studio">ENTER THE STUDIO <span className="icon-inline"><ArrowDownRightIcon /></span></Link>
           </div>
         </div>
         <div className="hero-reference-shot" style={{ backgroundImage: `url("${HERO_IMAGE}")` }} aria-label="Studio hero artwork">
           <span>STUDIO DNA</span><b>THE NEW STUDIO HERO ARTWORK.</b>
         </div>
-        <div className="scroll-cue">SCROLL TO ENTER <span>↓</span></div>
+        <div className="scroll-cue">SCROLL TO ENTER <span className="icon-inline"><ArrowDownIcon /></span></div>
       </section>
 
       <section className="latest section-shell home-latest" id="latest">
@@ -100,8 +101,8 @@ export default function Home() {
             <p>MrBeast’s million-dollar puzzle, Austin stories, retro tech, AI, and the usual detours. The newest episode now uses its actual video artwork instead of a generic host photo.</p>
             {latestEpisode.videoTitle && <div className="video-cut-label">VIDEO CUT · {latestEpisode.videoTitle}</div>}
             <div className="platform-actions">
-              <Link href="/episodes">OPEN EPISODE WALL →</Link>
-              {latestEpisode.youtubeId && <a href={`https://www.youtube.com/watch?v=${latestEpisode.youtubeId}`} target="_blank" rel="noreferrer">WATCH ↗</a>}
+              <Link href="/episodes">OPEN EPISODE WALL <span className="icon-inline"><ArrowRightIcon /></span></Link>
+              {latestEpisode.youtubeId && <a href={`https://www.youtube.com/watch?v=${latestEpisode.youtubeId}`} target="_blank" rel="noreferrer">WATCH <span className="icon-inline"><ArrowUpRightIcon /></span></a>}
             </div>
           </div>
         </div>
@@ -115,13 +116,13 @@ export default function Home() {
         </div>
         <div className="page-portal-grid">
           <Link className="page-portal portal-episodes" href="/episodes" style={{ backgroundImage: `url("${latestEpisode.thumbnail}")` }}>
-            <span>01 / EPISODES</span><b>Pull a story off the wall.</b><i>→</i>
+            <span>01 / EPISODES</span><b>Pull a story off the wall.</b><i className="icon-inline"><ArrowRightIcon /></i>
           </Link>
           <Link className="page-portal portal-crew" href="/crew" style={{ backgroundImage: `url("${CREW_IMAGE}")` }}>
-            <span>02 / CREW</span><b>The familiar voices in the room.</b><i>→</i>
+            <span>02 / CREW</span><b>The familiar voices in the room.</b><i className="icon-inline"><ArrowRightIcon /></i>
           </Link>
           <Link className="page-portal portal-studio" href="/studio" style={{ backgroundImage: `url("${STUDIO_IMAGE}")` }}>
-            <span>03 / STUDIO</span><b>Walk into the set.</b><i>→</i>
+            <span>03 / STUDIO</span><b>Walk into the set.</b><i className="icon-inline"><ArrowRightIcon /></i>
           </Link>
         </div>
       </section>
@@ -130,10 +131,10 @@ export default function Home() {
         <div className="section-kicker">PLUG IN</div>
         <h2>Pick your platform.<br />Hit play there.</h2>
         <div className="platform-grid">
-          <a href="https://open.spotify.com/show/6goGgtyzjWUzr9kgnWRDZi" target="_blank" rel="noreferrer"><span>01</span><b>SPOTIFY</b><i>↗</i></a>
-          <a href="https://www.youtube.com/@ZaneAndHeath" target="_blank" rel="noreferrer"><span>02</span><b>YOUTUBE</b><i>↗</i></a>
-          <a href="https://www.patreon.com/zaneandheath" target="_blank" rel="noreferrer"><span>03</span><b>PATREON</b><i>↗</i></a>
-          <a href="https://www.instagram.com/zane" target="_blank" rel="noreferrer"><span>04</span><b>INSTAGRAM</b><i>↗</i></a>
+          <a href="https://open.spotify.com/show/6goGgtyzjWUzr9kgnWRDZi" target="_blank" rel="noreferrer"><span>01</span><b>SPOTIFY</b><i className="icon-inline"><ArrowUpRightIcon /></i></a>
+          <a href="https://www.youtube.com/@ZaneAndHeath" target="_blank" rel="noreferrer"><span>02</span><b>YOUTUBE</b><i className="icon-inline"><ArrowUpRightIcon /></i></a>
+          <a href="https://www.patreon.com/zaneandheath" target="_blank" rel="noreferrer"><span>03</span><b>PATREON</b><i className="icon-inline"><ArrowUpRightIcon /></i></a>
+          <a href="https://www.instagram.com/zane" target="_blank" rel="noreferrer"><span>04</span><b>INSTAGRAM</b><i className="icon-inline"><ArrowUpRightIcon /></i></a>
         </div>
       </section>
 
