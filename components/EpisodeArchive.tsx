@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { episodes } from "@/lib/episodes";
+import { ArrowRightIcon, ArrowUpRightIcon, CloseIcon } from "@/components/Icons";
 
 const tags = ["All", "Challenge", "Stories", "Internet Chaos", "Life Updates", "Unhinged"];
 
@@ -108,7 +109,7 @@ export default function EpisodeArchive({ motionEnabled }: ArchiveProps) {
                 <span className="poster-tag">{episode.tag}</span>
                 <strong>{episode.title}</strong>
                 <span className="poster-meta">{episode.date} · {episode.duration}</span>
-                <span className="poster-action">OPEN FILE →</span>
+                <span className="poster-action">OPEN FILE <span className="icon-inline"><ArrowRightIcon /></span></span>
               </button>
             ))}
             {filtered.length === 0 && <div className="archive-empty">NO TAPES MATCH THAT SEARCH.</div>}
@@ -119,14 +120,14 @@ export default function EpisodeArchive({ motionEnabled }: ArchiveProps) {
       {selected && (
         <div className="episode-modal-backdrop" role="presentation" onMouseDown={() => setSelected(null)}>
           <div className="episode-modal episode-modal-media" role="dialog" aria-modal="true" aria-label={`Episode ${selected.number}`} onMouseDown={(e) => e.stopPropagation()}>
-            <button type="button" className="modal-close" onClick={() => setSelected(null)} aria-label="Close episode details">×</button>
+            <button type="button" className="modal-close" onClick={() => setSelected(null)} aria-label="Close episode details"><span className="icon-inline"><CloseIcon /></span></button>
             <div className="modal-thumb" style={{ backgroundImage: `url("${selected.thumbnail}")` }} />
             <div className="modal-number">EPISODE {selected.number}</div>
             <h3>{selected.title}</h3>
             {selected.videoTitle && <p className="modal-video-title">VIDEO: {selected.videoTitle}</p>}
             <p>{selected.tag} · {selected.date} · {selected.duration}</p>
             <div className="modal-actions">
-              {selected.youtubeId && <a href={`https://www.youtube.com/watch?v=${selected.youtubeId}`} target="_blank" rel="noreferrer">WATCH ON YOUTUBE ↗</a>}
+              {selected.youtubeId && <a href={`https://www.youtube.com/watch?v=${selected.youtubeId}`} target="_blank" rel="noreferrer">WATCH ON YOUTUBE <span className="icon-inline"><ArrowUpRightIcon /></span></a>}
               <a href="/#listen">LISTEN OPTIONS</a>
               <button type="button" onClick={() => setSelected(null)}>BACK TO WALL</button>
             </div>
