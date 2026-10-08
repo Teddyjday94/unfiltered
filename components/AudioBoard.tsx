@@ -298,61 +298,85 @@ export default function AudioBoard() {
     }
 
     if (name === "Airhorn") {
-      // Stadium air horn: two buzzy reeds a major third apart, hard overdriven, with the
-      // classic BWAP-BWAP-BWAAAAP pattern. Each blast scoops up in pitch as pressure builds.
-      send(0.3);
+      // Stadium air horn: two reeds only a semitone apart, so they grind and beat against
+      // each other instead of forming a chord. Narrow-pulse waves give the nasal blat,
+      // heavy clipping and a burst of rushing air make it obnoxious. BWAP-BWAP-BWAAAAP.
+      send(0.15);
       const env = ctx.createGain();
       env.gain.value = 0;
       const shaper = ctx.createWaveShaper();
       const curve = new Float32Array(1024);
-      for (let i = 0; i < curve.length; i += 1) curve[i] = Math.tanh(((i / 511.5) - 1) * 4.5);
+      for (let i = 0; i < curve.length; i += 1) curve[i] = Math.tanh(((i / 511.5) - 1) * 7);
       shaper.curve = curve;
-      const honk = ctx.createBiquadFilter();
-      honk.type = "peaking"; honk.frequency.value = 2200; honk.Q.value = 1.2; honk.gain.value = 7;
-      const body = ctx.createBiquadFilter();
-      body.type = "peaking"; body.frequency.value = 900; body.Q.value = 0.9; body.gain.value = 4;
+      const nasal = ctx.createBiquadFilter();
+      nasal.type = "peaking"; nasal.frequency.value = 1500; nasal.Q.value = 2; nasal.gain.value = 9;
+      const blare = ctx.createBiquadFilter();
+      blare.type = "peaking"; blare.frequency.value = 3200; blare.Q.value = 1.5; blare.gain.value = 6;
+      const thin = ctx.createBiquadFilter();
+      thin.type = "highpass"; thin.frequency.value = 300;
       const lp = ctx.createBiquadFilter();
-      lp.type = "lowpass"; lp.frequency.value = 7500;
+      lp.type = "lowpass"; lp.frequency.value = 8000;
       const level = ctx.createGain();
-      level.gain.value = 0.75;
-      env.connect(shaper).connect(body).connect(honk).connect(lp).connect(level).connect(master);
+      level.gain.value = 0.8;
+      env.connect(shaper).connect(thin).connect(nasal).connect(blare).connect(lp).connect(level).connect(master);
 
       const blasts: [number, number][] = [[0, 0.17], [0.25, 0.17], [0.5, 1.1]];
       const end = now + 1.65;
-      const flutter = ctx.createOscillator();
-      flutter.frequency.value = 31;
-      flutter.start(now); flutter.stop(end);
 
-      [370, 466].forEach((base) => {
-        [-6, 6].forEach((cents) => {
-          const f = base * pitch * 2 ** (cents / 1200);
-          const osc = ctx.createOscillator();
-          osc.type = "sawtooth";
-          const vg = ctx.createGain();
-          vg.gain.value = 0.45;
-          const depth = ctx.createGain();
-          depth.gain.value = f * 0.004;
-          flutter.connect(depth).connect(osc.frequency);
-          osc.frequency.setValueAtTime(f, now);
-          blasts.forEach(([start, length]) => {
-            const s = now + start;
-            const e = s + length;
-            osc.frequency.setValueAtTime(f * 0.92, s);
-            osc.frequency.exponentialRampToValueAtTime(f, s + 0.05);
-            osc.frequency.setValueAtTime(f, e - 0.04);
-            osc.frequency.exponentialRampToValueAtTime(f * 0.95, e);
-          });
-          osc.connect(vg).connect(env);
-          osc.start(now); osc.stop(end);
+      // 25% duty pulse wave: the reed's buzzy, nasal waveform.
+      const harmonics = 48;
+      const real = new Float32Array(harmonics);
+      const imag = new Float32Array(harmonics);
+      for (let n = 1; n < harmonics; n += 1) real[n] = (2 / (n * Math.PI)) * Math.sin(n * Math.PI * 0.25);
+      const reed = ctx.createPeriodicWave(real, imag);
+
+      // Unsteady air pressure: a random wobble in pitch, not a smooth musical vibrato.
+      const wobble = ctx.createBufferSource();
+      const wobbleData = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 1.7), ctx.sampleRate);
+      const wd = wobbleData.getChannelData(0);
+      let w = 0;
+      for (let i = 0; i < wd.length; i += 1) { w += 0.002 * ((Math.random() * 2 - 1) - w); wd[i] = w * 20; }
+      wobble.buffer = wobbleData;
+      wobble.start(now); wobble.stop(end);
+
+      [440, 466].forEach((base) => {
+        const f = base * pitch;
+        const osc = ctx.createOscillator();
+        osc.setPeriodicWave(reed);
+        const vg = ctx.createGain();
+        vg.gain.value = 0.7;
+        const depth = ctx.createGain();
+        depth.gain.value = f * 0.01;
+        wobble.connect(depth).connect(osc.frequency);
+        osc.frequency.setValueAtTime(f, now);
+        blasts.forEach(([start]) => {
+          const s = now + start;
+          osc.frequency.setValueAtTime(f * 0.97, s);
+          osc.frequency.linearRampToValueAtTime(f, s + 0.015);
         });
+        osc.connect(vg).connect(env);
+        osc.start(now); osc.stop(end);
       });
+
+      // Rushing air from the can, mixed in before the clipper so it roughens the tone.
+      const air = ctx.createBufferSource();
+      const airData = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 1.7), ctx.sampleRate);
+      const ad = airData.getChannelData(0);
+      for (let i = 0; i < ad.length; i += 1) ad[i] = Math.random() * 2 - 1;
+      air.buffer = airData;
+      const airBand = ctx.createBiquadFilter();
+      airBand.type = "bandpass"; airBand.frequency.value = 2500; airBand.Q.value = 0.6;
+      const airGain = ctx.createGain();
+      airGain.gain.value = 0.12;
+      air.connect(airBand).connect(airGain).connect(env);
+      air.start(now); air.stop(end);
 
       blasts.forEach(([start, length]) => {
         const s = now + start;
         const e = s + length;
         env.gain.setValueAtTime(0, s);
-        env.gain.linearRampToValueAtTime(1, s + 0.02);
-        env.gain.setValueAtTime(1, e - 0.035);
+        env.gain.linearRampToValueAtTime(1, s + 0.008);
+        env.gain.setValueAtTime(1, e - 0.02);
         env.gain.linearRampToValueAtTime(0, e);
       });
     }
