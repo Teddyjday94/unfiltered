@@ -240,7 +240,7 @@ export default function AudioBoard() {
   const getBus = (ctx: AudioContext) => {
     if (busRef.current) return busRef.current;
     const limiter = ctx.createDynamicsCompressor();
-    limiter.threshold.value = -6; limiter.knee.value = 4; limiter.ratio.value = 12;
+    limiter.threshold.value = -3; limiter.knee.value = 4; limiter.ratio.value = 12;
     limiter.attack.value = 0.003; limiter.release.value = 0.15;
     limiter.connect(ctx.destination);
     const input = ctx.createGain();
@@ -298,14 +298,14 @@ export default function AudioBoard() {
     }
 
     if (name === "Airhorn") {
-      // Stadium air horn: a clashing cluster of buzzy reeds, overdriven, with the classic
-      // BWAP-BWAP-BWAAAAP pattern. Each blast scoops up in pitch as pressure builds.
-      send(0.35);
+      // Stadium air horn: two buzzy reeds a major third apart, hard overdriven, with the
+      // classic BWAP-BWAP-BWAAAAP pattern. Each blast scoops up in pitch as pressure builds.
+      send(0.3);
       const env = ctx.createGain();
       env.gain.value = 0;
       const shaper = ctx.createWaveShaper();
       const curve = new Float32Array(1024);
-      for (let i = 0; i < curve.length; i += 1) curve[i] = Math.tanh(((i / 511.5) - 1) * 3.2);
+      for (let i = 0; i < curve.length; i += 1) curve[i] = Math.tanh(((i / 511.5) - 1) * 4.5);
       shaper.curve = curve;
       const honk = ctx.createBiquadFilter();
       honk.type = "peaking"; honk.frequency.value = 2200; honk.Q.value = 1.2; honk.gain.value = 7;
@@ -314,7 +314,7 @@ export default function AudioBoard() {
       const lp = ctx.createBiquadFilter();
       lp.type = "lowpass"; lp.frequency.value = 7500;
       const level = ctx.createGain();
-      level.gain.value = 0.32;
+      level.gain.value = 0.75;
       env.connect(shaper).connect(body).connect(honk).connect(lp).connect(level).connect(master);
 
       const blasts: [number, number][] = [[0, 0.17], [0.25, 0.17], [0.5, 1.1]];
@@ -323,13 +323,13 @@ export default function AudioBoard() {
       flutter.frequency.value = 31;
       flutter.start(now); flutter.stop(end);
 
-      [370, 415, 466, 554].forEach((base, v) => {
-        [-7, 7].forEach((cents) => {
+      [370, 466].forEach((base) => {
+        [-6, 6].forEach((cents) => {
           const f = base * pitch * 2 ** (cents / 1200);
           const osc = ctx.createOscillator();
-          osc.type = v === 3 ? "square" : "sawtooth";
+          osc.type = "sawtooth";
           const vg = ctx.createGain();
-          vg.gain.value = v === 3 ? 0.12 : 0.28;
+          vg.gain.value = 0.45;
           const depth = ctx.createGain();
           depth.gain.value = f * 0.004;
           flutter.connect(depth).connect(osc.frequency);
